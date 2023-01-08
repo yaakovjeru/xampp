@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>הצגת משתמשים</h2>
+<mat-dialog-content class="mat-typography">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">קוד משתמש</th>
+            <th scope="col">שם משתמש</th>
+            <th scope="col">גורם יוזם</th>
+            <th scope="col">שם גורם יוזם</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data.users">
+            <td>{{item.MSUSER}}</td>
+            <td>{{item.SHMUSR}}</td>
+            <td>{{item.KGOREM}}</td>
+            <td>{{item.GRMSHM}}</td>
+          </tr>
+        </tbody>
+      </table>
+</mat-dialog-content>
+<mat-dialog-actions align="start">
+    <!-- <button class="btn btn-primary mr-2" [mat-dialog-close]="true" cdkFocusInitial>שמירה</button> -->
+    <button class="btn btn-outline-dark mr-2" mat-button mat-dialog-close>סגירה</button>
+</mat-dialog-actions>

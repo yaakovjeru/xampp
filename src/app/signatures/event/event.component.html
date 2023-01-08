@@ -1,0 +1,123 @@
+<app-header></app-header>
+
+<div class="container-fluid mt--8">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow casp_table  mat-elevation-z8 min-vh-70">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">סדר חותמים לאירוע: {{url_id}} <span *ngIf="url_gorem">גורם יוזם: {{url_gorem}}</span></h3>
+                    <div class="">
+                      <button type="button" class="btn btn-sm btn-primary" (click)="saveDetails()" *ngIf="startEdit">שמירה</button>
+                      <button type="button" class="btn btn-sm btn-outline-dark ml-2" (click)="unsaveDetails()" *ngIf="startEdit">ביטול שינויים</button>
+                      <button type="button" class="btn btn-sm btn-outline-primary" (click)="goBack()">חזור אחורה</button>
+                    </div>
+                </div>
+
+                <!-- <div class="card-body pb-0 pt-2">
+                  <div class="row">
+                    <div class="col-3" style="font-size: 12px">
+                      <mat-form-field appearance="outline">
+                        <mat-label>חיפוש חופשי</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" #input>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div> -->
+
+                <div class="row" *ngIf="!url_gorem">
+                  <div class="col p-5">
+                    <!-- <mat-form-field appearance="outline">
+                      <mat-label>בחירת גורם יוזם</mat-label>
+                      <mat-select>
+                        <mat-option *ngFor="let gorem of goremList" [value]="gorem.VSGORM">
+                          {{gorem.VSGORM}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>בחירת גורם יוזם</mat-label>
+                      <mat-select [(value)]="goremSelect" name="goremSelect" (selectionChange)="goEvent($event.value)">
+                        <input (keyup)="onKey($event.target.value)" class="search_input">
+                        <mat-option *ngFor="let row of goremListFilter" [value]="row.VSGORM">
+                          {{row.VSGORM}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <!-- <button class="btn btn-outline-primary mr-2" [disabled]="!goremSelect" (click)="goEvent()">הצגת סדר חותמים</button> -->
+                  </div>
+                </div>
+
+                <div class="table-responsive" *ngIf="url_gorem">
+                  <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" class="table align-items-center table-flush" matSort>
+                  
+                      <!-- ID Column -->
+                      <!-- <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                      </ng-container> -->
+                  
+                      <!-- Progress Column -->
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> שם תפקיד </th>
+                        <td mat-cell *matCellDef="let row"> 
+                          <span>{{row.VTNAME}}</span>  
+                        </td>
+                      </ng-container>
+                  
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="code">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> קוד תפקיד </th>
+                        <td mat-cell *matCellDef="let row"> #{{row.VSTFKD}} </td>
+                      </ng-container>
+                  
+                      <!-- Fruit Column -->
+                      <ng-container matColumnDef="order">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> סדר חתימה </th>
+                        <td mat-cell *matCellDef="let row; index as i; last as l">
+                          <div class="d-flex m-auto orders_buttuns">
+                            <button class="btn btn-outline-sucess btn-sm" [disabled]="i == 0" (click)="SortRow(i, row, 'up')"><i class="fa fa-arrow-up"></i></button>
+                            <span class="badge badge-success order_number">{{row.VSSEHA}}</span>
+                            <button class="btn btn-outline-sucess btn-sm" [disabled]="l" (click)="SortRow(i, row, 'down')"><i class="fa fa-arrow-down"></i></button>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <!-- <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> סטטוס </th>
+                        <td mat-cell *matCellDef="let row"> 
+                          <span class="badge badge-success">נחתם</span>
+                        </td>
+                      </ng-container> -->
+
+                      <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>פעולות</th>
+                        <td mat-cell *matCellDef="let row" class="text-center"> 
+                          <button class=" btn btn-outline-primary btn-sm" (click)="getUsers(row.VSTFKD)">הצגת חותמים</button>
+                          <button class=" btn btn-outline-danger mr-2 btn-sm" (click)="deleteRow(row.VSTFKD)"><i class="fa fa-trash"></i></button>
+                        </td>
+                      </ng-container>
+                  
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  
+                      <!-- Row shown when there is no matching data. -->
+                      <!-- <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">
+                          <div class="col-12 my-3">
+                            <div class="alert alert-warning" role="alert">
+                              <p class="m-0 text-white">לא נמצאו תוצאות חיפוש לביטוי: "{{input.value}}"</p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr> -->
+                    </table>
+                  
+                    <!-- <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="בחירת עמוד"></mat-paginator> -->
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

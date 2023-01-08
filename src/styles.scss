@@ -1,0 +1,89 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+body {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Open Sans', sans-serif;
+}
+.navbar-nav {
+    padding-right: 0;
+}
+.dropdown-menu .dropdown-item > i, .dropdown-menu .dropdown-item > svg {
+    margin-right: auto;
+    margin-left: 1rem;
+    font-size: 1rem;
+    vertical-align: -17%;
+}
+.avatar-group .avatar + .avatar {
+    margin-right: -1rem;
+    margin-left: auto;
+}
+.btn {
+    line-height: 1;
+    padding: 0.625rem 0.9rem;
+}
+
+/*tables*/
+.casp_table {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.card .table td, .card .table th {
+    border-left: 1px solid #f7f2f2;
+}
+.card .table td {
+    padding: 13px 1.5rem;
+}
+.mat-mdc-table td {
+    font-family: 'Open Sans', sans-serif !important; 
+}
+.table thead th {
+    letter-spacing: normal !important;
+    background-color: #f6f9fc;
+    color: #8898aa;
+    font-size: 12px;
+    text-align: right;
+}
+.mat-mdc-table .mdc-data-table__header-row {
+    height: 47px;
+}
+table.mat-mdc-table {
+    color: #525f7f;
+}
+td.mat-mdc-cell {
+    color: #525f7f;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+.loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-mdc-form-field-flex > .mat-mdc-form-field-infix { padding: 0.6em 0px !important; min-height: 40px;}
+.mat-mdc-form-field-label-wrapper { top: -1.5em; }
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+    top: 22px;
+}
+.mat-mdc-form-field-appearance-outline.mat-mdc-form-field-can-float.mat-mdc-form-field-should-float .mat-mdc-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+.min-vh-80 {
+    min-height: 80vh;
+}
+.min-vh-70 {
+    min-height: 70vh;
+}
+.min-vh-60 {
+    min-height: 60vh;
+}
