@@ -1,0 +1,43 @@
+<div class="col-12">
+    <div class="grid w-full mb-2">
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="flex pkuda_line_sum color-secondary">
+                        <div *ngFor="let item of initData.json">
+                            <span *ngIf="item.name">{{item.name}}: </span>
+                            <span class="font-bold">{{item.value}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid w-full mb-2">
+        <div class="col-12 border">
+            <div class="mb-2">
+                <lib-button bclass="rounded" icon="{{!newNote ? 'plus-in-circ-filled' : 'close'}}" label="{{!newNote ? 'כתיבת הודעה חדשה' : 'סגירה'}} " size="sm" (click)="newNote =! newNote" *ngIf="!newNote"></lib-button>
+            </div>  
+            <div *ngIf="newNote" class="form_inside_dialog">
+                <form [formGroup]="form">
+                    <div class="formgroup-inline">
+                        <div class="field mr-0 w-full">
+                            <label class="field-label">למשתמש</label>
+                            <p-multiSelect formControlName="users" [options]="usersList" (onClick)="selectUser()" (onFilter)="searchUsers($event.filter)" [showToggleAll]="false" optionLabel="SHMUSR" display="chip" [selectionLimit]="10"></p-multiSelect>
+                        </div>
+                        <div class="field mr-0 w-full">
+                            <label class="field-label">תוכן ההודעה</label>
+                            <textarea pInputTextarea formControlName="remark" rows="2"></textarea>
+                        </div>
+                        <lib-button (click)="postNote()" class="mr-2" bclass="rounded" label="שליחת ההודעה" size="sm"></lib-button>
+                        <lib-button (click)="newNote =! newNote" class="mr-2" bclass="rounded p-button-outlined p-button-danger" label="סגירה וביטול" size="sm"></lib-button>
+                    </div>
+                </form>
+            </div>
+            <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [rows]="5" [header]="false"></lib-table>
+        </div>
+    </div>
+</div>
+
+<p-toast position="top-center"></p-toast>

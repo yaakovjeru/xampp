@@ -1,0 +1,74 @@
+<div class="grid">
+    <div class="grid w-full">
+        <div class="col-1">
+            <a routerLink="/">
+                <div class="back_btn"><i class="pi pi-arrow-right"></i></div>
+            </a>
+        </div>
+        <div class="col-9">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="flex pkuda_line_sum color-secondary">
+                        <div>
+                            <span class="font-bold">מס פקודה: </span>
+                            <span>{{pkuda_id}}</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">שנת התקציב: </span>
+                            <span>{{year}}</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">מינהל: </span>
+                            <span>000</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">אגף: </span>
+                            <span>000</span>
+                        </div>                       
+                    </div>
+                </div>
+            
+                <div class="col-12 pt-1 pb-0">
+                    <div class="flex pkuda_line_sum pkuda_line_sum_second color-secondary">
+                        <div>
+                            <span class="font-bold">יוצר פקודה: </span>
+                            <span>Zakeny</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">מנהל אגף: </span>
+                            <span>תקציבים</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">חשבות: </span>
+                            <span>חשבות</span>
+                        </div>
+                        <div>
+                            <span class="font-bold">גזבר העירייה: </span>
+                            <span>הגזבר</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+     
+    <div class="col-12 page-content my-2">
+        <div class="grid">
+            <div class="col-12 text-center text-xl font-bold mb-2 surface-200 p-1">
+                <span class="ml-2 text-700">סך חובה: <span class="text-900">{{dataTable.sum_hva}}</span></span>
+                <span class="ml-2 text-700">סך זכות: <span class="text-900">{{dataTable.sum_zct}}</span></span>
+                <span class="ml-2 text-700">הפרש: <span class="text-900">{{dataTable.hefresh}}</span></span>
+                <span class="ml-2 text-700" *ngIf="dataTable.sum_err>0" style="color: crimson !important; margin-right: 50px;">מספר השורות השגויות:
+                     <span style="color: crimson !important;" class="text-900">{{dataTable.sum_err}}</span></span>
+            </div>
+        </div>
+        <lib-table [dataTable]="dataTable" (onActionsClick)="editTnua($event)">
+            <ng-template #mainButtons>
+                <lib-button class="mr-3" bclass="rounded" icon="plus-in-circ-filled" label="הוסף תנועת חובה" size="sm" (click)="newTnua(2)"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="plus-in-circ-filled" label="הוסף תנועת זכות" size="sm" (click)="newTnua(1)"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="plus-in-circ-filled" label="הוסף תנועת חובה/זכות" size="sm" (click)="newTnua(3)"></lib-button>
+            </ng-template>
+        </lib-table>
+    </div>
+</div>

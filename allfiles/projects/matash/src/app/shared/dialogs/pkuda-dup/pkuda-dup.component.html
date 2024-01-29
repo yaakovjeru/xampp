@@ -1,0 +1,76 @@
+<div class="grid">
+    <div class="col-12 p-0">
+        <div class="w-full">
+            <div class="grid">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">מספר פקודה</label>
+                        <input type="text" pInputText name="pkuda" [(ngModel)]="formData.pkuda" readonly />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">שנה</label>
+                        <input type="text" pInputText name="year" [(ngModel)]="formData.year" readonly />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">תאריך ערך</label>
+                        <input type="text" pInputText name="year" [(ngModel)]="dmy" readonly />
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <h3 style="color: navy; background-color: aquamarine; text-align: center;">נתוני חיפוש להעתקה</h3>
+
+            <div class="grid">
+
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">שנה</label>
+                        <input type="text" pInputText name="Y4" [(ngModel)]="fndY4" />
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">חשבון</label>
+                        <input type="text" pInputText name="HN" [(ngModel)]="fndHN" />
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="field">
+                        <label class="field-label">תאור</label>
+                        <input type="text" pInputText name="TEUR" [(ngModel)]="fndTUR" />
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">פקודת המקור לשיכפול</label>
+                        <input type="text" pInputText name="pkuda" [(ngModel)]="pkudaCPY" />
+                    </div>
+                </div>                
+
+            </div>
+
+
+        </div>
+
+        <div class="grid">
+            <div class="col-12 text-center">
+                <lib-button [label]=this.btnLABEL size="md" (click)="getHN_LIST()" icon="search" id="btnFind"></lib-button>
+                <lib-button label="העתקה" size="md"  (click)="doCPY_PKUDA()" *ngIf="pkudaCPY != '0'"></lib-button>
+            </div>
+        </div>
+
+        <div class="col-12 page-content" *ngIf="dataTable.data">
+            <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [rows]="7"></lib-table>
+        </div>
+        
+    </div>
+</div>

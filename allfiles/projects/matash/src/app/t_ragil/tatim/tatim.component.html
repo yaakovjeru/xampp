@@ -1,0 +1,69 @@
+<div class="grid">
+    <div class="col-12 lg:col-4 xl:col-2 text-center flex justify-content-center">
+        <lib-button class="w-full btn-dashboard " bclass="h-full w-full" 
+            label="סעיף {{tkSaif}} {{tkTeur}}" size="sm"></lib-button>
+    </div>
+    <div class="col-12 lg:col-4 xl:col-2 text-center flex justify-content-center">
+        <lib-button class="w-full btn-dashboard " bclass="h-full w-full"
+            label="סכום תקציב {{formattedNumber}}" size="sm"></lib-button>
+    </div>
+    <div class="col-12 lg:col-4 xl:col-2 text-center flex justify-content-center">
+        <lib-button class="w-full btn-dashboard " bclass="h-full w-full" icon="add" (click)="addTatSaif()"
+            label="הוספת תת סעיף" size="md"></lib-button>
+    </div>
+</div>
+<div class="col-12 page-content" *ngIf="dtTATIM.data">
+    <p-table [value]="data" [columns]="cols" dataKey="TKNOSE" editMode="row">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of cols">
+                    {{col.HEADER}}
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tat let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="tat">
+                <td>
+                    {{tat.TKSAIF}}
+                </td>
+                <td>
+                    {{tat.TKTEUR}}
+                </td>
+                <td>
+                    {{tat.TKNOSE}}
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="tat.TKTRTT" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{tat.TKTRTT}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="tat.TKSCUM" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{tat.TKSCUM}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <lib-button class="mr-3" *ngIf="!editing" pInitEditableRow icon="pi pi-pencil" label="ערוך"
+                            size="sm"></lib-button>
+                        <lib-button class="mr-3" *ngIf="editing" pSaveEditableRow icon="pi pi-check"
+                            (click)="onRowEditSave(tat)" label="שמירה" size="sm"></lib-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+

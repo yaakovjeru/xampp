@@ -1,0 +1,77 @@
+@use "sass:math";
+@import "./assets/core-design/sass/variables";
+
+:host {
+    --speed-dial-radius: 2.5rem;
+    --speed-dial-item-radius: 3.25rem;
+
+    position: relative;
+    display: inline-flex;
+
+    .speed-dial-button {
+        padding: 0;
+        width: 1.4rem;
+        height: 1.4rem;
+        // margin: -0.2rem 0;
+        border-radius: 0.25rem;
+        // margin: 0;
+        // display: inline-flex;
+        // cursor: pointer;
+        // user-select: none;
+        // align-items: center;
+        // vertical-align: bottom;
+        // text-align: center;
+        // overflow: hidden;
+        // position: relative;
+        // color: var(--primary-color);
+        // border: 0 none;
+        // padding: 0;
+    }
+}
+
+.speed-dial-list {
+    position: absolute;
+    display: block;
+    // top: calc(50% - var(--speed-dial-radius) / 2);
+    // left: calc(50% - var(--speed-dial-radius) / 2);
+    top: 50%;
+    left: 50%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    .speed-dial-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.875rem;
+        line-height: 0.97;
+        color:  #fff;
+        font-weight: $font-weight-bold;
+        width: var(--speed-dial-item-radius);
+        height: var(--speed-dial-item-radius);
+        background-color: $gray-500;
+        border-radius: 50%;
+        cursor: pointer;
+
+        a {
+            color: inherit
+        }
+
+        @for $i from 0 through 2 {
+            &:nth-of-type(#{$i + 1}) {
+                position: absolute;
+                $angle: (90 - 90 * $i) * math.div(math.$pi, 180);
+                bottom: calc(var(--speed-dial-radius) * math.sin($angle) - 0.5 * var(--speed-dial-item-radius));
+                left: calc(var(--speed-dial-radius) * math.cos($angle) - 0.5 * var(--speed-dial-item-radius));
+            }
+        }
+
+        @each $i, $color in (1: $primaryColor, 2: $errorColor, 3: $accentColor) {
+            &:nth-of-type(#{$i}) {
+                background-color: $color;
+            }
+        }
+    }
+}

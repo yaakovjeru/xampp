@@ -1,0 +1,37 @@
+.arich {
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    background: #0B3058;
+    height: 105px;
+    .title {
+        font: normal normal bold 17px/23px Assistant;
+        color: #01CABD;
+        border-left: 1px solid #01CABD;
+    }
+    .sum_number {
+        height: 100%;
+        color: #02c7bb;
+        font: normal normal 20px/21px Assistant;
+    }
+    .sum_number_dig {
+        color: #ACE8E4;
+        font: normal normal bold 36px/38px Assistant;
+    }
+    
+}
+
+:host ::ng-deep .arich svg {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 10px;
+    color: #01cabd !important;
+}
+
+@media screen and (max-width: 1500px) {
+    .arich {
+        .title { 
+            font: 700 16px/21px Assistant;
+        }
+    }
+}

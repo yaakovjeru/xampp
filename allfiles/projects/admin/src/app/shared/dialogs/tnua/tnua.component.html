@@ -1,0 +1,258 @@
+<div class="grid">
+    <div class="col-12 p-0">
+        <div class="w-full">
+            <div class="grid">
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">מספר פקודה</label>
+                        <input type="text" pInputText name="pkuda" [(ngModel)]="formData.PKDA" readonly />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">תאריך ערך</label>
+                        <p-calendar [(ngModel)]="formData.EDTDAT" dateFormat="dd.mm.yy" [touchUI]="true"></p-calendar>
+                        <!-- <input type="text" pInputText name="year" [(ngModel)]="formData.Y4" readonly /> -->
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">שורה</label>
+                        <input type="text" pInputText name="line" [(ngModel)]="formData.SRA" readonly />
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">סוג תנועה</label>
+                        <input type="text" pInputText name="type" [value]="tnua_type" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="grid">
+                <div class="col-1"></div>
+                <div class="col-3">
+
+                    <div class="field">
+                        <label class="field-label">תאריך ערך</label>
+                        <p-calendar [(ngModel)]="formData.EDTDAT" dateFormat="dd.mm.yy" [touchUI]="true"></p-calendar>
+                    </div>
+                </div>
+            </div> -->
+
+                <div class="grid" *ngIf="this.formData.HZ == 1 || this.formData.HZ == 3">
+                    <!-- <div class="col-1">
+                        <div class="field">
+                            <lib-button size="md" (click)="getHN_LIST('HN_ZCT')" icon="search"></lib-button>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">חשבון זכות</label>
+                            <input type="text" pInputText name="HNZCT" [(ngModel)]="formData.HNZCT" />
+                        </div>
+                    </div> -->
+
+                    <div class="col-3">
+                        <div class="field p-inputgroup p-inputtext-sm">
+                            <label class="field-label">חשבון זכות</label>
+                            <input type="text" pInputText name="HNZCT" [(ngModel)]="formData.HNZCT" />
+                            <button type="button" pButton label="חיפוש" (click)="getHN_LIST('HN_ZCT')"></button>
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">תאור</label>
+                            <input type="text" pInputText name="HNHVAT" [(ngModel)]="formData.HNZCTT" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="field p-inputtext-sm" [style.visibility]="!isHN_ZCT? 'hidden': 'visible'">
+                            <label class="field-label">חשבון זכות</label>
+                            <p-dropdown [options]="HN_LIST" (onChange)="selHN($event, 'HN_ZCT')" [editable]="true"
+                                optionLabel="KOD">
+                                <ng-template let-p pTemplate="HN_LIST">
+                                    <div class="flex align-items-center">
+                                        <div>{{p.KOD}} {{p.TXT}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="field p-inputgroup p-inputtext-sm">
+                            <label class="field-label">פיצול זכות</label>
+                            <input type="text" pInputText name="PZLZCT" [(ngModel)]="formData.PZLZCT" />
+                            <button type="button" pButton label="חיפוש" (click)="getPZL_LIST('PZL_Z')"></button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-1">
+                        <div class="field">
+                            <lib-button size="md" (click)="getPZL_LIST('PZL_Z')" icon="search"></lib-button>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">פיצול זכות</label>
+                            <input type="text" pInputText name="PZLZCT" [(ngModel)]="formData.PZLZCT" />
+                        </div>
+                    </div> -->
+
+                    <div class="col-5">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">תאור</label>
+                            <input type="text" pInputText name="PZLZCTT" [(ngModel)]="formData.PZLZCTT" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="field p-inputtext-sm" [style.visibility]="!isPZL_ZCT? 'hidden': 'visible'">
+                            <label class="field-label">פיצול זכות</label>
+                            <p-dropdown [options]="PZL_LIST" (onChange)="selPZL($event, 'PZL_Z')" [editable]="false"
+                                optionLabel="KOD">
+                                <ng-template let-p pTemplate="PZL_LIST">
+                                    <div class="flex align-items-center">
+                                        <div>{{p.KOD}} {{p.TXT}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="grid" *ngIf="this.formData.HZ == 2 || this.formData.HZ == 3">
+                    <!-- <div class="col-1">
+                        <div class="field">
+                            <lib-button size="md" (click)="getHN_LIST('HN_HVA')" icon="search"></lib-button>
+                        </div>
+                    </div> -->
+
+                    <div class="col-3">
+                        <div class="field p-inputgroup p-inputtext-sm">
+                            <label class="field-label">חשבון חובה</label>
+                            <input type="text" pInputText name="HNHVA" [(ngModel)]="formData.HNHVA" />
+                            <button type="button" pButton label="חיפוש" (click)="getHN_LIST('HN_HVA')"></button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-3">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">חשבון חובה</label>
+                            <input type="text" pInputText name="HNHVA" [(ngModel)]="formData.HNHVA" />
+                        </div>
+                    </div> -->
+
+                    <div class="col-5">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">תאור</label>
+                            <input type="text" pInputText name="HNHVAT" [(ngModel)]="formData.HNHVAT" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="field p-inputtext-sm" [style.visibility]="!isHN_HVA? 'hidden': 'visible'">
+                            <label class="field-label">חשבון חובה</label>
+                            <p-dropdown [options]="HN_LIST" (onChange)="selHN($event, 'HN_HVA')" [editable]="true"
+                                optionLabel="KOD">
+                                <ng-template let-p pTemplate="HN_LIST">
+                                    <div class="flex align-items-center">
+                                        <div>{{p.KOD}} {{p.TXT}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="field p-inputgroup p-inputtext-sm">
+                            <label class="field-label">פיצול חובה</label>
+                            <input type="text" pInputText name="PZLHVA" [(ngModel)]="formData.PZLHVA" />
+                            <button type="button" pButton label="חיפוש" (click)="getPZL_LIST('PZL_H')"></button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-1">
+                        <div class="field">
+                            <lib-button size="md" (click)="getPZL_LIST('PZL_H')" icon="search"></lib-button>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col-3">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">פיצול חובה</label>
+                            <input type="text" pInputText name="PZLHVA" [(ngModel)]="formData.PZLHVA" />
+                        </div>
+                    </div> -->
+
+                    <div class="col-5">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">תאור</label>
+                            <input type="text" pInputText name="PZLHVAT" [(ngModel)]="formData.PZLHVAT" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="field p-inputtext-sm" [style.visibility]="!isPZL_HVA? 'hidden': 'visible'">
+                            <label class="field-label">פיצול חובה</label>
+                            <p-dropdown [options]="PZL_LIST" (onChange)="selPZL($event, 'PZL_H')" [editable]="false" optionLabel="KOD">
+                                <ng-template let-p pTemplate="PZL_LIST">
+                                    <div class="flex align-items-center">
+                                        <div>{{p.KOD}} {{p.TXT}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="grid" *ngIf="this.formData.HZ == 2 || this.formData.HZ == 3">
+                    <div class="col-3">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">סכום</label>
+                            <input type="text" pInputText name="SCMHVA" [(ngModel)]="formData.SCMHVA" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid" *ngIf="this.formData.HZ == 1">
+                    <div class="col-3">
+                        <div class="field p-inputtext-sm">
+                            <label class="field-label">סכום</label>
+                            <input type="text" pInputText name="SCMZCT" [(ngModel)]="formData.SCMZCT" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="col-3">
+                    <div class="field p-inputtext-sm">
+                        <label class="field-label">אסמכתא</label>
+                        <input type="text" aria-describedby="אסמכתא" pInputText name="ASM" [(ngModel)]="formData.ASM" />
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="field p-inputtext-sm">
+                        <label class="field-label">פרטים</label>
+                        <input type="text" aria-describedby="פרטים" pInputText name="TUR" [(ngModel)]="formData.TUR" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="col-12 text-center">
+                    <lib-button label="שמירה" size="md" (click)="saveTnua()"></lib-button>
+                    <lib-button class="mr-2" bclass="surface-500" label="מחיקה" size="md"
+                        (click)="deleteTnua()"></lib-button>
+                </div>
+            </div>
+        </div>
+    </div>

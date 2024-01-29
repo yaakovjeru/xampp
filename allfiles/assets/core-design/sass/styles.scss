@@ -1,0 +1,31 @@
+// This is the basic styling for the all caspit applications.
+// It is based on material-light/standard prime theme
+
+// imports of the prime design basic (no theme)
+// and the also importing the prime icons 
+// moved to angular.json
+// @import '../../../node_modules/primeng/resources/primeng.min.css';
+// @import '../../../node_modules/primeicons/primeicons.css';
+
+// App variables and mixins.
+@import './variables';
+@import './mixins';
+
+// App fonts
+// @import './_fonts';
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap');
+
+// Prime styles / designs imports
+// base design + material design + flex design
+@import './designer/_components';
+@import './material/extensions/vendor_extensions';
+@import '../../../node_modules/primeflex/primeflex';
+
+@import '../../scss/custom';
+
+// App extensions
+@import './extensions/prime-rtl';
+@import './extensions/lib-general';
+@import './extensions/lib-svg';
+@import './extensions/lib-form';
+@import './extensions/lib-table';

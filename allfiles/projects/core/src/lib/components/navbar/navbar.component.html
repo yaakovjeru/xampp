@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center loading_box" id="loading">
+    <div class="loader" role="status"></div>
+</div>
+
+<nav class="navbar-dark">
+    <div class="flex align-items-center justify-content-between">
+
+        <div class="logo_line flex align-items-center">
+            <!-- <button type="button" class="btn_pointer" (click)="showMenu =! showMenu"><img alt="menu" src="{{base_url}}/core/assets/svgs/menu.svg"></button> -->
+            <a href="http://jer400:10100/yam/logistic/#/rechesh/dashboard"><button type="button" class="btn_pointer"><img alt="menu" src="{{base_url}}/core/assets/svgs/menu.svg"></button></a>
+            <img alt="logo" src="{{base_url}}/core/assets/img/logo_white.svg">
+            <span class="color-white pl-2">מערכת כספית עיריית ירושלים</span>
+            <!-- <span class="color-primary">פקודות יומן | שנת תקציב 2023</span> -->
+            <span class="color-primary">2023</span>
+        </div>
+
+        <div class="navbar-details flex align-items-center color-white">
+            <div>
+                בוקר טוב, <span *ngIf="userData">{{userData.fullname}}</span> (<a href="#" (click)="logout()">התנתקות</a>)
+            </div>
+            <!-- <div>
+                <i class="pi pi-check-circle"></i> משימות
+            </div>
+            <div>
+                <i class="pi pi-search"></i> חיפוש מורחב
+            </div> -->
+        </div>
+    </div>
+</nav>
+
+<div class="menu_full" [ngClass]="showMenu ? 'show' : 'hide'">
+    <button type="button" class="btn_pointer close_menu" (click)="showMenu =! showMenu"><img alt="menu" src="{{base_url}}/core/assets/svgs/close.svg"></button>
+    <div class="grid h-full text-center m-0">
+        <div class="col" *ngFor="let section of this.menuItems">
+            <h3>{{section.name}}</h3>
+            <ul>
+                <li *ngFor="let item of section.menu" [ngClass]="isSomePage(item.path)">
+                    <a href="{{item.path}}" (click)="navigate(item.path)">{{item.title}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col bg-primary flex justify-content-center flex-column">
+            <a href="/dashboard"><img alt="logo" class="menu_full_logo" src="{{base_url}}/core/assets/img/logo_icon.svg"></a>
+            <h1>מערכת כספית עיריית ירושלים</h1>
+        </div>
+    </div>
+</div>

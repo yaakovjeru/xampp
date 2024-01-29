@@ -1,0 +1,95 @@
+.sidecard {
+    background: #fff;
+    padding: 1rem 0;
+    position: fixed;
+    top: 5rem;
+    right: 100%;
+    bottom: 5rem;
+    z-index: 191;
+    border-right: solid 16px #092a63;
+    // $general-primary;
+    min-width: 650px;
+    transform: translateX(0);
+    transition: all 0.2s ease-in-out;
+
+    &--opened {
+        transform: translateX(100%);
+        z-index: 192;
+        box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12) default;
+        //$overlayContainerShadow;
+    }
+}
+
+.sidecard-tab {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    padding: 0.5rem 0.75rem;
+    line-height: 1;
+    background: #092a63;
+    //$general-primary;
+    color: #fff;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    transform: rotate(90deg);
+    transform-origin: top left;
+    margin-left: calc(#{1.2rem} * 1 + 2 * 0.5rem + 16px); // 16px = side card border
+    // margin-left: calc(#{$sidecard-tab-font-size} * 1 + 2 * 0.5rem + 16px); // 16px = side card border
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 1.2rem;
+    //$sidecard-tab-font-size;
+    font-weight: 700;
+    //$font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+        margin-right: 0.5rem;
+        padding-right: 0.5rem;
+        border-right: solid 1px rgba(#fff, 0.3);
+
+        .pi, ed-svg {
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+    }
+}
+
+.sidecard-box {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.sidecard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 2rem;
+    font-weight: 700;
+    //$font-weight-bold;
+    color: #092a63;
+    //$general-primary;
+    padding: 0 1rem;
+    //$sidecard-padding-x;
+    margin-bottom: 1rem;
+
+    .p-button.p-button-icon-only.p-button-rounded.close-button {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+.sidecard-content {
+    flex: 1 1 0px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 1rem;
+    //$sidecard-padding-x;
+}
+

@@ -1,0 +1,5 @@
+<div class="field" [ngClass]="{'field-required' : required}">
+    <label class="field-label" for="first-name-1">{{label}}</label>
+    <input id="first-name-1" type="text" aria-describedby="first-name-1-help" pInputText />
+    <small class="hint" id="first-name-1-help" *ngIf="hint">{{hint}}</small>
+</div>

@@ -1,0 +1,40 @@
+div#htmlData {
+    width: 1000px;
+    margin: 0 auto;
+}
+.box_seder_title {
+    min-height: 230px;
+    // justify-content: center;
+    // align-items: center;
+    background: #eee;
+}
+.seder_box {
+    min-height: 230px;
+    
+}
+.seder_box:nth-child(6n) {
+    //margin-bottom: 60px !important;
+}
+.long_comment {
+    font-size: 17px;
+    line-height: 27px;
+}
+.protocol_txt p {
+    line-height: 30px !important;
+    font-size: 18px;
+}
+iframe {
+    width: 100%;
+    height: 1200px;
+    // max-width: 1200px;
+}
+.pdf_between {
+    width: 100%;
+    height: 19px;
+}
+// .seder_box:nth-child(6) {
+//     padding-bottom: 5px !important;
+// }
+// .seder_box:nth-child(7) {
+//     padding-bottom: 100px !important;
+// }

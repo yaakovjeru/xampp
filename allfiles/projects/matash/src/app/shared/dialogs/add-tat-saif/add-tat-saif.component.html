@@ -1,0 +1,35 @@
+<div class="grid">
+    <div class="col-3">
+        <div class="field">
+            <label class="field-label">סעיף</label>
+            <input type="text" aria-describedby="סעיף" value="{{TKSAIF}}" readonly pInputText />
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="field">
+            <label class="field-label">תת סעיף</label>
+            <input type="text" aria-describedby="תת סעיף" pInputText [(ngModel)]="TKNOSE" />
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="field">
+            <label class="field-label">תאור תת</label>
+            <input type="text" aria-describedby="תאור תת" pInputText [(ngModel)]="TKTRTT" />
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="field">
+            <lib-button class="mr-3" (click)="searchTat()" label="חפש" size="m"></lib-button>
+        </div>
+    </div>
+        <div class="col-2" *ngIf="isNotExist">
+            <div class="field">
+                <h4>סעיף לא קיים</h4>
+            </div>
+        </div>
+        <div class="col-3" *ngIf="isNotExist">
+            <div class="field">
+                <lib-button class="mr-3" (click)="addNew()" label="הוספת תת סעיף חדש" size="m"></lib-button>
+            </div>
+        </div>
+</div>

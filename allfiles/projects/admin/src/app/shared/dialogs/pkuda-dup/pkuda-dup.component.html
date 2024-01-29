@@ -1,0 +1,84 @@
+<div class="grid">
+    <div class="col-12 p-0">
+        <div class="w-full">
+            <div class="grid">
+                <div class="col-3"></div>
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">מספר פקודה</label>
+                        <input type="text" pInputText name="pkuda" [(ngModel)]="formData.pkuda" readonly />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">שנה</label>
+                        <input type="text" pInputText name="year" [(ngModel)]="formData.year" readonly />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">תאריך ערך</label>
+                        <input type="text" pInputText name="year" [(ngModel)]="dmy" readonly />
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <h4>נתוני חיפוש להעתקה</h4>
+
+            <div class="grid">
+
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">שנה</label>
+                        <input type="text" pInputText name="Y4" [(ngModel)]="fndY4"
+                            [style]="{'height':'48px'}" class="p-inputtext-sm" />
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <div class="field">
+                        <lib-button size="md" (click)="getHN_LIST()" icon="search"></lib-button>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="field">
+                        <label class="field-label">חשבון</label>
+                        <input type="text" pInputText name="HN" [(ngModel)]="fndHN" [style]="{'height':'48px'}"
+                            class="p-inputtext-sm" />
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="field">
+                        <label class="field-label">תאור</label>
+                        <input type="text" pInputText name="TEUR" [(ngModel)]="fndTUR"
+                            [style]="{'height':'48px'}" class="p-inputtext-sm" />
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <div class="field">
+                        <label class="field-label">פקודת המקור לשיכפול</label>
+                        <input type="text" pInputText name="pkuda" [(ngModel)]="pkudaCPY" [style]="{'height':'48px'}"
+                            class="p-inputtext-sm" />
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-12 page-content" *ngIf="dataTable" style="height: 600px;">
+            <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)"></lib-table>
+        </div>
+
+        <!-- <div class="grid">
+            <div class="col-12 text-center">
+                <lib-button label="העתקה" size="md"></lib-button>
+            </div>
+        </div> -->
+    </div>
+</div>

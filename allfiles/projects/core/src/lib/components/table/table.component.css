@@ -1,0 +1,8 @@
+.bg-red {
+    background: #ffb1b1 !important;
+}
+.bg-green {
+    background: #CCF5F2;
+    color: green !important;
+    font-weight: 600;
+}

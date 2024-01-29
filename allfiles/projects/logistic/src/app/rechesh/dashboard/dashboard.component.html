@@ -1,0 +1,35 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="grid"> 
+            <!-- <div class="col-2">
+                <lib-ariach title="ועדות פתוחות" icon="data-transfer" numbers="1"></lib-ariach>
+            </div> -->
+            <div class="col-2">
+                <lib-ariach title="ועדות השנה" icon="data-transfer" [numbers]="dataTable.totalrows_year"></lib-ariach>
+            </div>
+            <!-- <div class="col-2">
+                <lib-ariach title="סך הועדות" icon="data-transfer" [numbers]="dataTable.totalrows"></lib-ariach>
+            </div> -->
+            <!-- <div class="col-2">
+                <lib-ariach title="הועדה הבאה" icon="data-transfer" [numbers]="dataTable.data[0].VDDATE | dateNumbers"></lib-ariach>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="col-12 lg:col-4 xl:col-1 text-center flex justify-content-center">
+        <lib-button class="w-full btn-dashboard " bclass="h-full w-full" icon="add" label="צור דרישת טובין חדשה" size="lg" (click)="newPkuda()"></lib-button>
+    </div> -->
+</div>
+<div class="grid">
+  <!-- <div class="col-12 mt-3">
+      <div class="m-0 text-xl font-bold">ניהול ועדות רכש - ({{dataTable.totalrows}}) רשימת ועדות</div>
+  </div> -->
+  <div class="col-12 page-content mt-3" *ngIf="dataTable.data">
+      <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [pagination_url]="true" title="ניהול ועדות קניות - ({{dataTable.totalrows}}) רשימת ועדות">
+        <ng-template #mainButtonsRight>
+            <lib-button class="mr-3" bclass="rounded" icon="plus-in-circ-filled" label="הוסף ועדה חדשה" size="sm" (click)="newVada()"></lib-button>
+        </ng-template>
+      </lib-table>
+  </div>
+</div>
+
+<p-toast></p-toast>

@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    color: $textColor;
+    // font-weight: $font-weight-regular;
+    line-height: $line-height-base;
+
+    @include rtl {
+        direction: rtl;
+        text-align: right;
+    }
+    
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1720px;
+    padding: 0 0.5rem;
+}
+
+a {
+    cursor: pointer;
+    // color: $primaryColor;
+}
+
+.p-component {
+    line-height: inherit;
+}
+
+.text-error {
+    color: $errorColor; //$red-500;
+}
+// .text-success {
+//     color: $green-500;
+// }
+
+// .error {
+//     color: $errorColor;
+//     font-weight: $font-weight-bold;
+// }
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+}
+
+// aligning icons
+.pi {
+    vertical-align: middle;
+}

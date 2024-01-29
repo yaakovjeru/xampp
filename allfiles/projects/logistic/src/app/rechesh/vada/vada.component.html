@@ -1,0 +1,175 @@
+<div class="grid" *ngIf="dataTable.initData">
+    <div class="grid w-full">
+        <div class="col-1">
+            <a routerLink="/" *ngIf="!viewSeder"><div class="back_btn" ><i class="pi pi-arrow-right"></i></div></a>
+            <a routerLink="#" *ngIf="viewSeder"><div class="back_btn" (click)="viewSeder = false"><i class="pi pi-arrow-right"></i></div></a>
+        </div>
+        <div class="col-9">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="flex pkuda_line_sum color-secondary">
+                        <div><span>מס ועדה: </span><span class="font-bold">{{dataTable.initData.VDMSVD}}</span></div>
+                        <div><span>סוג ועדה: </span><span class="font-bold">{{dataTable.initData.TKTIUR}}</span></div>
+                        <div><span>יו"ר ועדה: </span><span class="font-bold">{{dataTable.initData.TSUSRSM1}}</span></div>
+                        <div><span>תאריך ועדה: </span><span class="font-bold">{{dataTable.initData.VDDATE | dateNumbers}} {{dataTable.initData.VDHGDH}} (יום {{dataTable.initData.VDDATW}} {{dataTable.initData.VDSHAA.substring(0,2)}}:{{dataTable.initData.VDSHAA.substring(2,4)}})</span></div>                      
+                    </div>
+                </div>
+            
+                <div class="col-12 pt-1 pb-0">
+                    <div class="flex pkuda_line_sum pkuda_line_sum_second color-secondary">
+                        <div><span>שם רשם: </span><span class="font-bold">{{dataTable.initData.VDRASM}}</span></div>
+                        <div><span>מיקום הועדה: </span><span class="font-bold">{{dataTable.initData.VDMKUM}}</span></div>
+                        <div><span>תאריך אחרון להגשה: </span><span class="font-bold">{{dataTable.initData.VDHGDT | dateNumbers}}  {{dataTable.initData.VDHGDH}} (יום {{dataTable.initData.VDHGDW}})</span></div> 
+                        <div *ngIf="dataTable.initData.TSZOOM"><a href="{{dataTable.initData.TSZOOM.startsWith('http') || dataTable.initData.TSZOOM.startsWith('https') ? dataTable.initData.TSZOOM : 'https://'+dataTable.initData.TSZOOM  }}" target="_blank"><span>לינק לזום לוועדה</span></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="bg_badge bg_badge_{{dataTable.initData.VDSTTS.trim() == 'פתוח' ? 'red' : 'green'}}">
+                <div class="badge_text">{{vada_status}}</div>
+                <lib-svg svg="bg_tag_green"></lib-svg>
+            </div>
+        </div>
+    </div>
+  
+    <div class="col-12 page-content my-2" *ngIf="!viewSeder">
+        <div class="grid">
+            <div class="col-12 text-center text-xl font-bold mb-2 surface-200 p-1">
+                פרטי דרישות בועדה מספר {{dataTable.initData.VDMSVD}}
+            </div>
+        </div>
+        <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [pagination_url]="false" [rows]="8">
+            <ng-template #mainButtonsRight>
+                <lib-button class="mr-3" bclass="rounded p-button-secondary" icon="search" label="חיפוש" size="sm" *ngIf="dataTable.totalrows > 0" (click)="search()"></lib-button>
+                <p-dropdown class="p-inputtext-sm mr-3 search_dropdown_bar" (onChange)="selectStatus($event)" [options]="sumStatus.arr" size="sm" optionLabel="name" placeholder="סינון לפי סטטוס" *ngIf="vadaStatus > 5"></p-dropdown>
+                <lib-button class="mr-3" bclass="rounded p-button-secondary" icon="close" label="נקה חיפוש" size="sm" (click)="clearSearch()" *ngIf="insearch"></lib-button>
+                <ng-container *ngIf="manageVada">
+                    <!-- <lib-button [label]="item.key+'-'+item.values.length" class="mr-3" bclass="rounded p-button-warning" *ngFor="let item of sumStatus.all"></lib-button> -->
+                    <lib-button label="נשארו להחלטת ועדה - {{sumStatus.left}}" class="mr-3" bclass="rounded p-button-warning" (click)="searchStatus(2)"></lib-button>
+                </ng-container>
+                <lib-button class="mr-3" bclass="rounded" icon="edit" label="עדכון ועדה" size="sm" (click)="editVada()" *ngIf="dataTable.initData.VDSTTS.trim() == 1"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="check" label="הכנסת דרישות לועדה" size="sm" (click)="vadaAction('insert_drishot', 'הכנסת דרישות לועדה', 'האם ברצונך להכניס דרישות לועדה?')" *ngIf="dataTable.initData.VDSTTS.trim() == 1"></lib-button>
+
+                <lib-button class="mr-3" bclass="rounded" icon="check" label="הכנסת דרישה בודדת" size="sm" (click)="vadaDialogSingleDrisha = true" *ngIf="dataTable.initData.VDSTTS.trim() == 1"></lib-button>
+
+                <!-- view seder you sign after protocol -->
+                <lib-button class="mr-3" bclass="rounded" icon="open-book" label="הצגת סדר יום" size="sm" *ngIf="vadaStatus > 7" (click)="vadaAction('pdfSingSeder', 'הפקת מסמך חתום', 'האם ברצונך להפיק מסמך חתום?'); viewSeder =! viewSeder"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="open-book" label="הצגת {{vadaStatus < 4 || vadaStatus == 8 ? 'טיוטת ' : ''}} {{dataTable.initData.VDSTTS.trim() == 3 ? 'פרוטוקול': 'סדר יום'}}" size="sm" 
+                    (click)="vadaStatus == 6 || vadaStatus == 7 || vadaStatus == 10 || vadaStatus == 11 ? vadaAction('pdfSing', 'הפקת מסמך חתום', 'האם ברצונך להפיק מסמך חתום?') : getCurrentPdf()" 
+                    *ngIf="dataTable.totalrows > 0"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="voucher" label="הפקת סדר יום" size="sm" (click)="vadaAction('go_seder', 'הפקת סדר יום', 'האם ברצונך להפיק סדר יום?')" *ngIf="vadaStatus == 2"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="voucher" label="ביטול סדר יום" size="sm" (click)="vadaAction('open_seder', 'החזרת ועדה לסטטוס פתוח', 'האם ברצונך לבטל סדר יום?')" *ngIf="vadaStatus == 3"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="voucher" label="ביטול סדר יום חתום" size="sm" (click)="vadaDialogCancelSeder = true" *ngIf="vadaStatus > 3 && vadaStatus < 7"></lib-button>
+            
+                <lib-button class="mr-3" bclass="rounded" icon="voucher" label="שליחת מייל סדר יום" size="sm" (click)="vadaAction('send_mail', 'שליחת מייל סדר יום', 'האם ברצונך לשלוח מייל לכלל מכיני הדרישות?')" *ngIf="vadaStatus == 3"></lib-button>
+                <!-- <lib-button class="mr-3" bclass="rounded" icon="voucher" label="שליחת מייל סדר יום" size="sm" (click)="vadaAction('send_mail', 'שליחת מייל סדר יום', 'האם ברצונך לשלוח מייל למנהלי הועדה?')" *ngIf="vadaStatus > 2 && vadaStatus < 8"></lib-button> -->
+
+                <lib-button class="mr-3" bclass="rounded" icon="voucher" label="מעבר לחתימות" size="sm" (click)="vadaAction('sign10', 'מעבר לחתימות', 'האם ברצונך להעביר את הסדר יום לחתימות?')" *ngIf="vadaStatus == 3"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="voucher" label="מעבר לחתימות" size="sm" (click)="vadaAction('sign11', 'מעבר לחתימות', 'האם ברצונך להעביר את הפרוטוקול לחתימות?')" *ngIf="vadaStatus == 8"></lib-button>
+                
+                <lib-button class="mr-3" bclass="rounded" icon="edit" label="עדכון פרטי ועדה" size="sm" (click)="vadaDialogEditVada = true" *ngIf="vadaStatus > 5"></lib-button>
+                
+                <lib-button class="mr-3" bclass="rounded" icon="invoice" label="הפקת פרוטוקול" size="sm" (click)="vadaAction('protocol', 'הפקת פרוטוקול', 'האם ברצונך להפיק את הפרוטוקול?')" *ngIf="vadaStatus == 7"></lib-button>
+                <lib-button class="mr-3" bclass="rounded" icon="stamp" label="אישור דרישה בודדת" size="sm" (click)="vadaDialogSingleDrishaApprove = true" *ngIf="vadaStatus > 6"></lib-button>
+                <lib-button class="mr-3" bclass="rounded p-button-danger" icon="delete" label="ביטול ועדה" size="sm" (click)="vadaAction('cancel', 'ביטול ועדה', 'האם ברצונך לבטל את הועדה?')" *ngIf="dataTable.initData.VDSTTS.trim() == 1 && dataTable.totalrows < 1"></lib-button>
+                <lib-button class="mr-3" bclass="rounded p-button-help" [icon]="'edit'" [label]="'ניהול ועדה'" size="sm" (click)="manageVada =! manageVada; openManageVada(manageVada)" *ngIf="vadaStatus == 6 || vadaStatus == 7"></lib-button>
+            </ng-template>
+            <ng-template #actions *ngIf="manageVada" let-rowData>
+                <lib-button class="mr-3" bclass="rounded p-button-success" icon="checked" label="אישור מהיר" size="sm" *ngIf="rowData.DRSTTS == 2" (click)="quickDecide(rowData)"></lib-button>
+                <!-- <lib-button class="mr-3" bclass="rounded p-button-danger" icon="delete" label="לא אושר" size="sm" (click)="drishaDecide(2, rowData)"></lib-button> -->
+                <lib-button class="mr-3" bclass="rounded p-button-info" icon="stamp" label="החלטה" size="sm" (click)="drishaDecide(3, rowData)"></lib-button>
+            </ng-template>
+        </lib-table>
+        <div *ngIf="dataTable.data.length < 1">
+            <h2 class="text-center pt-4">לא נמצאו דרישות בועדה זו</h2>
+        </div>
+    </div>
+</div>
+
+<div class="grid" *ngIf="this.dataTable.initData && viewSeder">
+    <div class="grid w-full">
+        <div class="col-12 page-content my-5">
+            <lib-button bclass="rounded" size="sm" icon="menu" (click)="viewSeder = false" class="mr-2" label="חזרה לדרישות הועדה"></lib-button>
+            <div class="row" *ngIf="pdfUrlIfram">
+                <div class="col-12">
+                    <iframe [src]="pdfUrlIfram" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="row" *ngIf="pdfView && !pdfUrlIfram">
+                <div class="col-12">
+                    <iframe [src]="pdfView" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Header" [(visible)]="vadaDialogSingleDrisha" [style]="{ width: '700px' }" header="הכנסת דרישה בודדת">
+    <div>
+        <div class="field field-md">
+            <label class="field-label">מספר דרישה</label>
+            <input type="text" class="input-sm" pInputText maxlength="12" minlength="12" (keypress)="numberOnly($event)" #singleDrisha />
+        </div>
+    </div>
+    <p-footer class="flex justify-content-between">
+        <button type="button" class="p-button-danger p-button-outlined m-0" pButton label="ברצוני לבטל את הפעולה" (click)="vadaDialogSingleDrisha = false"></button>
+        <button type="button" class="p-button-success m-0" pButton label="הכנסת הדרישה לועדה" (click)="postSingleDrisha(singleDrisha.value)"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="vadaDialogSingleDrishaApprove" [style]="{ width: '700px' }" header="אישור דרישה בודדת">
+    <div>
+        <div class="field field-md">
+            <label class="field-label">מספר דרישה</label>
+            <input type="text" class="input-sm" pInputText maxlength="12" minlength="12" (keypress)="numberOnly($event)" #singleDrishaApprove />
+        </div>
+    </div>
+    <p-footer class="flex justify-content-between">
+        <button type="button" class="p-button-danger p-button-outlined m-0" pButton label="ברצוני לבטל את הפעולה" (click)="vadaDialogSingleDrishaApprove = false"></button>
+        <button type="button" class="p-button-success m-0" pButton label="אישור הדרישה לועדה" (click)="postSingleDrishaApprove(singleDrishaApprove.value)"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="vadaDialogCancelSeder" [style]="{ width: '700px' }" header="ביטול סטטוס סדר יום בועדה">
+    <div>
+        <div class="field field-md">
+            <label class="field-label">תיאור סיבה לביטול</label>
+            <textarea rows="4" cols="30" pInputTextarea maxlength="2400" #singleCancelMessage></textarea>
+        </div>
+    </div>
+    <p-footer class="flex justify-content-between">
+        <button type="button" class="p-button-danger p-button-outlined m-0" pButton label="ברצוני לבטל את הפעולה" (click)="vadaDialogCancelSeder = false"></button>
+        <button type="button" class="p-button-success m-0" pButton label="החזרת הועדה לסטטוס פתוח" (click)="postVadaCancelSeder(singleCancelMessage.value)"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="vadaDialogEditVada" [style]="{ width: '900px' }" header="עדכון פרטי ועדה מספר {{dataTable.initData.VDMSVD}}" *ngIf="dataTable.initData">
+    <div>
+        <div class="field field-md">
+            <label class="field-label">זום ועדה</label>
+            <input type="text" class="input-sm" pInputText [(ngModel)]="dataTable.initData.TSZOOM" #singleVadaEditZoom />
+        </div>
+        <div class="field field-md">
+            <label class="field-label">תיאור סדר יום</label>
+            <textarea rows="4" cols="30" pInputTextarea maxlength="2400" [(ngModel)]="dataTable.initData.TSKTSRY" #singleVadaEditSeder [readonly]="this.vadaStatus > 4"></textarea>
+        </div>
+        <div class="field field-md">
+            <label class="field-label">תיאור פרוטוקול</label>
+            <textarea rows="4" cols="30" pInputTextarea maxlength="2400" [(ngModel)]="dataTable.initData.TSKTPRT" #singleVadaEditProtocol [readonly]="this.vadaStatus > 7"></textarea>
+        </div>
+    </div>
+    <p-footer class="flex justify-content-between">
+        <button type="button" class="p-button-danger p-button-outlined m-0" pButton label="ברצוני לבטל את הפעולה" (click)="vadaDialogEditVada = false"></button>
+        <button type="button" class="p-button-success m-0" pButton label="שמירת פרטי ועדה" (click)="postVadaEdit(singleVadaEditProtocol.value, singleVadaEditSeder.value, singleVadaEditZoom.value)"></button>
+    </p-footer>
+</p-dialog>
+
+<p-confirmDialog #cd [style]="{width: '700px'}" [baseZIndex]="10000">
+    <p-footer class="flex justify-content-between">
+        <button type="button" class="p-button-danger p-button-outlined m-0" pButton label="ברצוני לבטל את הפעולה" (click)="cd.reject()"></button>
+        <button type="button" class="p-button-success m-0" pButton label="אני מסכים ומוכן להמשיך" (click)="cd.accept()"></button>
+    </p-footer>
+</p-confirmDialog>
+
+<p-toast></p-toast>

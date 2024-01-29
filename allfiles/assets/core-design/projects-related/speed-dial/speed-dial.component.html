@@ -1,0 +1,8 @@
+<button pButton type="button" class="speed-dial-button p-button-text p-button-secondary" libSvg="plus-in-circ-filled" (click)="toggleList()">
+    <!-- <lib-svg svg="plus-in-circ-filled" class="text-primary" (click)="toggleList()"></lib-svg> -->
+</button>
+
+<ul class="speed-dial-list" *ngIf="displayItems">
+    <li *ngFor="let item of items" class="speed-dial-item" (click)="onItemClick(item)" [innerHTML]="item.label">
+    </li>
+</ul>

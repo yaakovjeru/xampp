@@ -1,0 +1,13 @@
+.upload_dialog {
+    background: var(--gray-400) 0% 0% no-repeat padding-box;
+    background: #D8D8D8 0% 0% no-repeat padding-box;
+    min-height: 400px;
+}
+.file_index_reader {
+    border-left: 1px solid #afaeae;
+    margin: 0 4px;
+    padding-left: 8px;
+    &:last-child {
+        border-left: none;
+    }
+}

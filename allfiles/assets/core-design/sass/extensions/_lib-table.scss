@@ -1,0 +1,160 @@
+.p-datatable {
+    --header-button-spacing: 0.5rem;
+    --divider-bg: #fff;
+
+    & &-thead > tr > th,
+    & &-tfoot > tr > td,
+    & &-tbody > tr > td {
+        border-color: $table-border-color $table-border-horizontal-color;
+        overflow: hidden;
+
+        @include rtl() {
+            text-align: right;
+
+            &:first-of-type {
+                border-right-width: 1px;
+            }
+
+            &:last-of-type {
+                border-left-width: 1px;
+            }
+        }
+        &.divider-cell {
+            border-right-width: 1px;
+        }
+
+        &.group-divider-cell {
+            @include rtl() {
+                padding-right: calc(#{$divider-cell-width} + #{$table-cell-x-padding} + 2px);
+
+                &:before {
+                    content: "";
+                    display: table-cell;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: $divider-cell-width;
+                    height: 100%;
+                    background-color: var(--divider-bg);
+                    border-left: solid 1px $table-border-horizontal-color;
+                    border-right: solid 1px $table-border-horizontal-color;
+                }
+            }
+        }
+    }
+
+    & &-thead {
+        > tr {
+            > th {
+                line-height: 1.17;
+                &.group-divider-cell {
+                    overflow: unset;
+                    &:before {
+                        margin-top: -1px;
+                    }
+                }
+            }
+            &:first-of-type {
+                > th {
+                    border-top-width: 1px;
+                }
+            }
+            &:not(:first-of-type) {
+                > th {
+                    padding-top: 0;
+                }
+            }
+            &:last-of-type {
+                > th {
+                    border-bottom-width: 1px;
+                }
+            }
+        }
+    }
+
+    td,
+    th {
+        position: relative;
+        vertical-align: top;
+    }
+
+    // header (caption)
+    &-header {
+        .p-button.p-button-text {
+            padding-right: 0;
+            padding-left: 0;
+
+            & + .p-button.p-button-text {
+                margin-right: calc(#{$button-padding-x - 0.25rem} + var(--header-button-spacing));
+            }
+        }
+    }
+
+    // sizing button
+    .p-button {
+        margin-top: -0.25rem;
+        margin-bottom: -0.25rem;
+        padding: ($button-padding-y - 0.5rem) ($button-padding-x - 0.25rem);
+
+        &:not(.p-button-rounded) {
+            border-radius: 4px;
+        }
+
+        &.p-button-icon-only {
+            width: $buttonIconOnlyWidth - 1rem;
+            padding: ($button-padding-y - 0.5rem);
+
+            &.p-button-rounded {
+                height: 2.1rem;
+                height: $buttonIconOnlyWidth - 1rem;
+            }
+        }
+
+        // & + .p-button {
+        //     margin-left: var(--header-button-spacing);
+
+        //     @include rtl {
+        //         margin-left: unset;
+        //         margin-right: var(--header-button-spacing);
+        //     }
+        // }
+    }
+
+    // sizing inputs (for column filters)
+    .p-column-filter {
+        .p-inputtext {
+            font-size: 1rem;
+            padding: 0.25rem 0.35rem;
+        }
+        .p-inputtext,
+        .p-inputnumber,
+        .p-dropdown {
+            border-radius: 4px;
+        }
+
+        p-multiselect {
+            width: 100%;
+        }
+        .p-multiselect {
+            border-radius: 4px;
+            .p-multiselect-label {
+                padding: 0.25rem 0.35rem;
+            }
+            .p-multiselect-trigger {
+                width: $inputGroupAddOnMinWidth - 1rem;
+            }
+        }
+    }
+}
+
+// cell styling
+.cell--primary {
+    background-color: $primary-200;
+    color: $primaryColor;
+    font-weight: $font-weight-semibold;
+}
+.cell--error {
+    background-color: $red-200;
+    color: $red-500;
+    font-weight: $font-weight-semibold;
+}

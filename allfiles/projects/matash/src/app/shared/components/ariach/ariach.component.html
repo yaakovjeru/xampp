@@ -1,0 +1,18 @@
+<div class="arich">
+    <div class="grid">
+        <div class="col-5">
+            <div class="title pl-3 h-full flex align-items-center justify-content-center flex-column">
+                <lib-svg [svg]="icon" class="big_svg svg_white"></lib-svg>
+                {{title}}
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="flex align-content-center align-items-center justify-content-around h-full">
+                <div class="sum_number" *ngFor="let item of numbers">
+                    <div class="sum_number_dig">{{item.sum}}</div>
+                    <div>{{item.title}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

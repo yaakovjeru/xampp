@@ -1,0 +1,109 @@
+<div class="container pb-5">
+    <div>
+        <h1>הבה ונשחק ....</h1>
+
+        <!-- form card -->
+        <div class="sandbox-card" *ngIf="shouldDispalyCard('form')">
+            <div class="formgrid grid">
+                <div class="col-3">
+                    <div class="field field-required">
+                        <label class="field-label" for="first-name-1">שם פרטי</label>
+                        <input id="first-name-1" type="text" aria-describedby="first-name-1-help" pInputText />
+                        <small class="hint" id="first-name-1-help">מה השם הפרטי שלך</small>
+                    </div>
+                </div>
+
+                <div class="field col-3 field-required">
+                    <label class="field-label" for="first-name-2">שם פרטי</label>
+                    <input id="first-name-2" type="text" aria-describedby="first-name-2-help" pInputText />
+                    <small class="hint" id="first-name-2-help">מה השם הפרטי שלך</small>
+                </div>
+
+                <div class="field col-3">
+                    <label class="field-label" for="last-name">שם משפחה</label>
+                    <input id="last-name" type="text" aria-describedby="last-name-help" pInputText />
+                    <small class="hint" id="last-name-help">וגם שם המשפחה....</small>
+                </div>
+
+                <div class="field col-3">
+                    <label class="field-label" for="general-manager">מנהל מערכת</label>
+                    <div class="p-inputgroup">
+                        <input id="general-manager" type="text" pInputText />
+                        <button type="button" pButton pRipple icon="pi pi-search"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- svg card -->
+        <div class="sandbox-card" *ngIf="shouldDispalyCard('svg')">
+            <div class="flex align-items-start flex-column gap-4">
+                <div>
+                    שימוש כרכיב פשוט: <lib-svg [svg]="'trash'"></lib-svg> -מול- <i class="pi pi-search"></i>
+                </div>
+                <a>
+                    <lib-svg [svg]="'trash'"></lib-svg> בדיקה עם קישור
+                </a>
+                <div>
+                    שימוש עם directive של כפתור pButton <button type="button" pButton [libSvg]="'trash'"></button>
+                    -מול- <button type="button" pButton icon="pi pi-search"></button>
+                    <span class="mr-8">וגם עם כיתוב: </span> <button type="button" label="לחץ כאן" pButton
+                        [libSvg]="'trash'"></button>
+                    -מול- <button type="button" label="לחץ כאן" pButton icon="pi pi-search"></button>
+                    <span class="mr-8">וגם עם אייקון בצד השני: </span> <button type="button" iconPos="right"
+                        label="לחץ כאן" pButton [libSvg]="'trash'"></button>
+                    -מול- <button type="button" iconPos="right" label="לחץ כאן" pButton icon="pi pi-search"></button>
+                </div>
+
+                <div>
+                    שימוש בתוך רכיב 'p-button' כאפשרות נוספות <p-button type="button" [libSvg]="'trash'"></p-button>
+                    -מול- <p-button type="button" icon="pi pi-search"></p-button>
+                    <span class="mr-8">וגם עם כיתוב: </span> <p-button type="button" label="לחץ כאן"
+                        [libSvg]="'trash'"></p-button>
+                    -מול- <p-button type="button" label="לחץ כאן" icon="pi pi-search"></p-button>
+                    <span class="mr-8">וגם עם אייקון בצד השני: </span> <p-button type="button" iconPos="right"
+                        label="לחץ כאן" [libSvg]="'trash'"></p-button>
+                    -מול- <p-button type="button" iconPos="right" label="לחץ כאן" icon="pi pi-search"></p-button>
+                </div>
+
+                <div>
+                    כפתור מוקטן: <button type="button" pButton libSvg="trash" label="לחץ כאן"
+                        class="button-xs"></button>
+                    -מול- <button type="button" pButton icon="pi pi-search" label="לחץ כאן" class="button-xs"></button>
+                </div>
+
+                <div>
+                    <div [libSvg]="'trash'"></div> אייקון לא יופיע כי ה directive מתאים רק לכפתור
+                </div>
+
+                <div>
+                    שליטה על גודל וצבעוניות: <lib-svg [svg]="'trash'" style="font-size: 2rem; color: #f50;"></lib-svg>
+                </div>
+
+                <div>הוספה כתוכן פנימי בכפתור
+                    <button type="button" pButton class="p-button-icon-only">
+                        <lib-svg [svg]="'trash'"></lib-svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- table card -->
+        <div class="sandbox-card" *ngIf="shouldDispalyCard('table')">
+            <sandbox-table></sandbox-table>
+        </div>
+
+        <!-- speedDial card -->
+        <div class="sandbox-card" *ngIf="shouldDispalyCard('speedDial')">
+            <div class="flex justify-content-center">
+                <speed-dial [items]="speedDialMenu"></speed-dial>
+            </div>
+        </div>
+
+        <!-- prime card -->
+        <div class="sandbox-card" *ngIf="shouldDispalyCard('prime')">
+            <lib-sandbox-prime-designer></lib-sandbox-prime-designer>
+        </div>
+
+    </div>
+</div>

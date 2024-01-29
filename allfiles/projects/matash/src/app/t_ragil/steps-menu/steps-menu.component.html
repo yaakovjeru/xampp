@@ -1,0 +1,19 @@
+<div class="custom-timeline-container">
+    <div class="custom-timeline">
+      <div class="center-container">
+        <ng-container *ngFor="let event of events; let i = index">
+          <div class="circle" [ngClass]="event.status == 'true' ? 'done' : ''"></div>
+          <div class="line" *ngIf="i !== events.length - 1"></div>
+          <div class="event-item" [ngClass]="i % 2 === 0 ? 'align-right' : 'align-left'">
+            <i class="pi {{ event.icon }}"></i>
+            <span class="event-date">{{ event.date }}</span>
+            <span class="event-title">{{ event.state }}</span>
+            <span class="event-description">{{ event.description }}</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  
+  

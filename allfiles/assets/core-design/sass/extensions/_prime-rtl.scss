@@ -1,0 +1,60 @@
+// inputgroup
+[dir="rtl"] {
+    .p-inputgroup-addon {
+        border-left: unset;
+        border-right: $inputBorder;
+
+        &:last-child {
+            border-left: $inputBorder;
+            border-right: unset;
+        }
+    }
+
+    .p-inputgroup {
+        > .p-component,
+        > .p-element,
+        > .p-inputwrapper > .p-component > .p-inputtext,
+        > .p-float-label > .p-component {
+            + .p-inputgroup-addon {
+                border-right: 0 none;
+            }
+        }
+    }
+
+    .p-inputgroup-addon:first-child,
+    .p-inputgroup button:first-child,
+    .p-inputgroup input:first-child,
+    .p-inputgroup > .p-inputwrapper:first-child > .p-component,
+    .p-inputgroup > .p-inputwrapper:first-child > .p-component > .p-inputtext {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: $borderRadius;
+        border-bottom-right-radius: $borderRadius;
+    }
+
+    .p-inputgroup .p-float-label:first-child input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: $borderRadius;
+        border-bottom-right-radius: $borderRadius;
+    }
+
+    .p-inputgroup-addon:last-child,
+    .p-inputgroup button:last-child,
+    .p-inputgroup input:last-child,
+    .p-inputgroup > .p-inputwrapper:last-child > .p-component,
+    .p-inputgroup > .p-inputwrapper:last-child > .p-component > .p-inputtext {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: $borderRadius;
+        border-bottom-left-radius: $borderRadius;
+    }
+
+    .p-inputgroup .p-float-label:last-child input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: $borderRadius;
+        border-bottom-left-radius: $borderRadius;
+    }
+
+}

@@ -1,0 +1,13 @@
+@import "./assets/core-design/sass/variables";
+
+:host {
+    .sandbox-card {
+        background-color: $gray-100; 
+        border: solid 1px $gray-200;
+        padding: 1rem;
+
+        & + .sandbox-card {
+            margin-top: 2rem;
+        }
+    }
+}

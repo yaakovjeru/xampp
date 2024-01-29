@@ -1,0 +1,448 @@
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { apiRecheshService } from '../apiRechesh.service';
+import { Router, ActivationEnd, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { DPritimComponent } from '../shared/dialogs/d-pritim/d-pritim.component';
+import { DVadaComponent } from '../shared/dialogs/d-vada/d-vada.component';
+import { DDecideComponent } from '../shared/dialogs/d-decide/d-decide.component';
+import { CoreService, NotesComponent, SearchComponent } from 'core';
+import {ConfirmationService} from 'primeng/api';
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
+import { MessageService } from 'primeng/api';
+
+@Component({
+  selector: 'app-vada',
+  templateUrl: './vada.component.html',
+  styleUrls: ['./vada.component.scss'],
+  providers: [ConfirmationService]
+})
+export class VadaComponent {
+    dataTable: any = [];
+    ref: DynamicDialogRef;
+    id:number;
+    manageVada:boolean = false;
+    viewSeder:boolean = false;
+    query_params:any;
+    myObserver:any = null;
+    insearch:boolean = false;
+    sumStatus:any = {};
+    vadaClosed:boolean = false;
+
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        public dialogService: DialogService,
+        public api: apiRecheshService,
+        private _location: Location,
+        private coreService: CoreService,
+        private confirmationService: ConfirmationService,
+        private messageService: MessageService
+    ){
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+        });
+        this.myObserver = this.router.events.subscribe((event) => {
+            if (event instanceof ActivationEnd) {
+                this.query_params = event.snapshot.queryParams;
+                //this.setupTableData(this.query_params);
+                //console.log('end')
+                if(this.ref) this.ref.close();
+            }
+            if (event instanceof NavigationEnd) {
+                this.setupTableData(this.query_params);
+                if((this.query_params.filter_fr_drisha && this.query_params.filter_fr_drisha != '') || this.query_params.status && this.query_params.status != ''){
+                    this.insearch = true;
+                }else{
+                    this.insearch = false;
+                }
+                // console.log(this.query_params)
+                //if(this.ref) this.ref.close();
+            }  
+        });
+    }
+    
+    ngOnInit() {
+        
+        //this.setupTableData();        
+    }
+
+    ngOnDestroy() {
+        this.myObserver.unsubscribe();
+    }
+    
+    rowClick(event){
+        this.openPritim(event);
+    }
+    
+    // SavePDF(): void {  
+    //     let DATA: any = document.getElementById('htmlData');
+    //     html2canvas(DATA).then((canvas) => {
+    //       let fileWidth = 208;
+    //       let fileHeight = (canvas.height * fileWidth) / canvas.width;
+    //       const FILEURI = canvas.toDataURL('image/png');
+    //       let PDF = new jsPDF('p', 'mm', 'a4');
+    //       let position = 0;
+    //       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+    //       PDF.save('vada-'+this.dataTable.initData.VDMSVD+'.pdf');
+    //     });
+    // }
+
+    @ViewChild('content') elementView: ElementRef;
+    SavePDF(save_server = false) {
+        // const htmlWidth = this.elementView.nativeElement.offsetWidth;//$("#htmlData").width();
+        // const htmlHeight = this.elementView.nativeElement.offsetHeight//$("#htmlData").height();
+    
+        // const topLeftMargin = 15;
+    
+        // let pdfWidth = htmlWidth + (topLeftMargin * 2);
+        // let pdfHeight = (pdfWidth * 1.5) + (topLeftMargin * 2);
+    
+        // const canvasImageWidth = htmlWidth;
+        // const canvasImageHeight = htmlHeight;
+    
+        // const totalPDFPages = Math.ceil(htmlHeight / pdfHeight) - 1;
+        // if(save_server){
+        //     this.viewSeder = true;
+        // }
+    
+        let DATA: any = document.getElementById('htmlData');
+
+        html2canvas(DATA, { allowTaint: true }).then(canvas => {
+    
+            //   canvas.getContext('2d');
+            //   const imgData = canvas.toDataURL("image/jpeg", 1.0);
+            //   let pdf = new jsPDF('p', 'pt', [pdfWidth, pdfHeight]);
+            //   pdf.addImage(imgData, 'png', topLeftMargin, topLeftMargin, canvasImageWidth, canvasImageHeight);
+            //   for (let i = 1; i <= totalPDFPages; i++) {
+            //     pdf.addPage([pdfWidth, pdfHeight], 'p');
+            //     pdf.addImage(imgData, 'png', topLeftMargin, - (pdfHeight * i) + (topLeftMargin * 4), canvasImageWidth, canvasImageHeight);
+            //   }
+            //   pdf.save('vada-'+this.dataTable.initData.VDMSVD+'.pdf');
+    
+            const imgWidth = 208;
+            const pageHeight = 295;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+            heightLeft -= pageHeight;
+            const doc = new jsPDF('p', 'mm');
+            doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+            while (heightLeft >= 0){
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+                heightLeft -= pageHeight;
+            }
+            
+            // if(save_server){
+            //     var blob = doc.output('blob');
+            //     console.log(blob);
+            //     doc.save('vada-'+this.dataTable.initData.VDMSVD+'.pdf');
+            //     return;
+            //     // var formData = new FormData();
+            //     // formData.append('pdf', blob);
+            //     // console.log(blob);
+            // }else{
+            //     doc.save('vada-'+this.dataTable.initData.VDMSVD+'.pdf');
+            //     return;
+            // }
+            doc.save('vada-'+this.dataTable.initData.VDMSVD+'.pdf');
+
+        });
+      }
+
+
+    //   toPDF(): void {
+    //     const AmiriRegular = 'AAEAAAASAQAABAAgRFNJR2D2zXQA.....A';
+    //     const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
+    //     doc.addFont("http://jer400:10100/yam/core/assets/fonts/NotoSansHebrew.ttf", "Noto", "normal");
+    //     doc.setFont("Noto");
+    //     doc.setFontSize(10);
+    //     //doc.text('אוהב'.split('').reverse().join(''), 10,10);
+    //     doc.html(
+    //         this.elementView.nativeElement, {
+    //             html2canvas: {
+    //                 scale: 0.2 // default is window.devicePixelRatio
+    //             },
+    //             callback: function (doc) {
+    //                 doc.addFont("http://jer400:10100/yam/core/assets/fonts/NotoSansHebrew.ttf", "Noto", "normal");
+    //                 doc.setFont("Noto");
+    //                 doc.setFontSize(10);
+    //                 doc.save('employee.pdf');
+    //             }
+    //          }
+    //     );
+    //     //doc.save('employee.pdf');
+    //     //    this.CAccounts.forEach(function (AccountsBody, i) {
+    //     //   doc.text(20, 20 + (i * 10),
+    
+    
+    //     //     "ID: " + AccountsBody.ID +
+    //     //     "NAME: " + AccountsBody.NAME.split('').reverse().join(''));
+    //     // });
+        
+    
+    //   }
+
+    // openArchive(){
+    //     this.coreService.openArchive(28, this.id);
+    // }
+
+    // save_pdf_server(formdata){
+    //     this.api.postPdfServer(formdata).subscribe(data => {
+    //         // data = JSON.parse(data);
+    //         // if(data.success){
+    //         //     this.toast();
+    //         // }else{
+    //         //     this.toast('שגיאה', 'אירעה שגיאה בפעולה', 'error');
+    //         // }
+    //         // if(type == 'cancel'){
+    //         //     this.router.navigate(['/rechesh/dashboard']);
+    //         // }else if(type == 'insert_drishot'){
+    //         //     window.location.reload();
+    //         // }else{
+    //         //     //this.setupTableData();
+    //         // }
+    //         // this.setupTableData();
+    //     });
+    // }
+
+    search(){
+        this.ref = this.dialogService.open(SearchComponent, {
+            header: 'חיפוש מתקדם',
+            width: '800px',
+            styleClass: 'dialogNoPadding'
+        });
+    }
+
+    searchStatus(status){
+        this.router.navigate([], {queryParams: {'status': status}});
+    }
+
+    clearSearch(){
+        this.router.navigate([], {});
+    }
+    
+    actionClick(event){
+        if(event.button.label == 'הצגה'){
+            this.openPritim(event.item);
+        }
+        if(event.button.label == "ארכיב אופטי"){
+            window.open("http://jerarchiveviewer/ArchiveInputDocs.html?SystemId=99&archiveid=28&outside=true&tiknum="+event.item.DRDRNO+"&description="+event.item.DRTEUR, '_blank');
+        }
+        if(event.button.label == 'הודעות והערות'){
+            this.openNotes(event.item);
+        }
+        if(event.button.event == 'drisha_out'){
+            if(event.item.DRISHA_STATUS > 2){
+                this.toast('שגיאה', 'אין אפשרות להוציא דרישה מועדה עם סטטוס מלא', 'error');
+                return;
+            }
+            this.vadaAction('drisha_out', 'הוצאת הדרישה מועדה', 'האם להוציא את הדרישה מהועדה?', event.item);
+        }
+        if(event.button.event == 'decide'){
+            // console.log(event)
+            // let decide_db_id = 1;
+            // if(event.item.DRISHA_STATUS == 4){
+            //     decide_db_id = 1;
+            // }else if(event.item.DRISHA_STATUS == 3){
+            //     decide_db_id = 1;
+            // }else if(event.item.DRISHA_STATUS == 4){
+            //     decide_db_id = 1;
+            // }
+            this.drishaDecide(1, event.item);
+        }
+       
+    }
+
+    vadaAction(type, title, content, extradata:any = null){
+        if(type == 'sign1'){
+            this.viewSeder = true;
+            console.log(this.SavePDF());
+        }
+        this.confirmationService.confirm({
+            message: content,
+            header: title,
+            // icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                let formdata = this.dataTable.initData;
+                formdata['TYPE'] = type;
+                if(type == 'drisha_out'){
+                    formdata =  {...formdata, ...extradata};
+                }
+                this.api.postVadaAction(formdata).subscribe(data => {
+                    data = JSON.parse(data);
+                    if(data.success){
+                        this.toast();
+                    }else{
+                        this.toast('שגיאה', 'אירעה שגיאה בפעולה', 'error');
+                    }
+                    if(type == 'cancel'){
+                        this.router.navigate(['/rechesh/dashboard']);
+                    }else if(type == 'insert_drishot'){
+                        window.location.reload();
+                    }else{
+                        //this.setupTableData();
+                    }
+                    this.setupTableData();
+                });
+            },
+            reject: () => {
+                //this.toast('שגיאה', 'אירעה שגיאה בפעולה', 'error');
+                //this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+            }
+        });
+    }
+
+    drishaDecide(type, event){
+        // console.log(type);
+        // console.log(event);
+        this.ref = this.dialogService.open(DDecideComponent, {
+            header: 'החלטת ועדה',
+            width: '1000px',
+            styleClass: 'dialogNoPadding',
+            data: {
+                item: event,
+                decide: type,
+            }
+        });
+        this.ref.onClose.subscribe((event: any) => {
+            if(event == 'update_status'){
+                this.setupTableData();
+            }
+        });
+    }
+
+    openPritim(event){
+        this.ref = this.dialogService.open(DPritimComponent, {
+            header: 'הצגת פריטים בדרישה: '+event.DRTEUR,
+            width: '1300px',
+            styleClass: 'dialogNoPadding',
+            data: event
+        });
+    }
+
+    editVada() {
+        this.ref = this.dialogService.open(DVadaComponent, {
+            header: 'עריכת ועדה',
+            width: '900px',
+            styleClass: 'dialogNoPadding',
+            data: {formData: this.dataTable.initData}
+        });
+        this.ref.onClose.subscribe((event: any) => {
+            if(event == 'edit'){
+                this.setupTableData();
+            }
+        });
+    }
+
+    openNotes(item) {
+        this.ref = this.dialogService.open(NotesComponent, {
+            header: 'הודעות והערות',
+            width: '1000px',
+            styleClass: 'dialogNoPadding',
+            data: {
+                item: {
+                    'assg' : '1',
+                    'lib' : 'LG',
+                    'asmx' : item.DRDRNO,
+                    'sug' : '1',
+                    'DRFRUS' : item.DRFRUS,
+                },
+                json: [
+                    {
+                        value: 'דרישת טובין',
+                    },{
+                        name: 'מספר דרישה',
+                        value: item.DRDRNO,
+                    },{
+                        name: 'סוג דרישה',
+                        value: 'טובין',
+                    }
+                ],
+            }
+        });
+    }
+
+    toast(title = 'הערת המערכת', msg = 'בוצע בהצלחה', status = 'success') {
+        this.messageService.add({ severity: status, summary: title, detail: msg });
+    }
+
+    openManageVada(event){
+        this.manageVada = event;
+        if(this.manageVada){
+            this.dataTable.buttons = [];
+        }else{
+            this.clearSearch();
+            this.setupTableData();
+        }
+    }
+    
+    setupTableData(params = {}) {
+        this.api.getVada(this.id, params).subscribe(data => {
+            this.dataTable = data;
+            this.dataTable.buttons = this.dataTable.buttons ? this.dataTable.buttons : [];
+            if(this.dataTable.initData.VDSTTS.trim() == 1){
+                this.dataTable.buttons = [
+                    {
+                        "type": "button",
+                        "label": "הצגה",
+                        "icon": "eye",
+                        "event": "display"
+                    }
+                ];
+            }else{
+                this.dataTable.buttons = [
+                    {
+                        "type": "button",
+                        "label": "החלטות",
+                        "icon": "stamp",
+                        "event": "decide"
+                    }
+                ];
+            }
+            
+            this.dataTable.menu = this.dataTable.menu ? this.dataTable.menu : [];
+            this.dataTable.menu.push(
+                {
+                    "type": "button",
+                    "label": "הודעות והערות",
+                    "icon": "pi-comment",
+                }
+            );
+            this.dataTable.menu.push(
+                {
+                    "type": "button",
+                    "label": "ארכיב אופטי",
+                    "icon": "pi-paperclip",
+                }
+            );
+            if(this.dataTable.initData.VDSTTS == 1){
+                this.dataTable.menu.push(
+                    {
+                        "type": "button",
+                        "label": "הוצאה מועדה",
+                        "icon": "pi-sign-out",
+                        "event": "drisha_out",
+                    }
+                );
+            }
+
+            this.sumStatus.open = this.dataTable.data.filter(t=>t.DRSTTS.trim() == 'מאושר').length;
+            this.sumStatus.left = this.dataTable.data.filter(t=>t.DRSTTS.trim() == 'התקבל לועדת קניות').length;
+            this.sumStatus.all = this.groupByArray(this.dataTable.data, 'DRSTTS');
+            if(this.sumStatus.left < 1){
+                this.vadaClosed = true;
+            }
+            // console.log(this.vadaClosed);
+        });
+    }
+
+    groupByArray(xs, key) { return xs.reduce(function (rv, x) { let v = key instanceof Function ? key(x) : x[key]; let el = rv.find((r) => r && r.key === v); if (el) { el.values.push(x); } else { rv.push({ key: v, values: [x] }); } return rv; }, []); }
+
+    backButton(){
+        this._location.back();
+    }
+}

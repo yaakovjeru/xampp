@@ -1,0 +1,285 @@
+<div class="grid surface-300 py-5 px-0">
+    <form [formGroup]="formVada" *ngIf="formVada.value">
+        <div class="col-12 p-0">
+            <div class="upload_dialog w-full flex justify-content-around align-items-center flex-column">
+                <div class="formgrid grid mx-5">
+                    <div class="col-12 text-right">
+                        <h4 class="mb-2">משתתפי הועדה:</h4>
+                    </div>
+                    <div class="col-6">
+                        <!-- <label class="field-label">משתתף 1</label> -->
+                        <div class="p-inputgroup">
+                            <div class="field field-sm">
+                                <input type="text" class="input-sm" pInputText formControlName="TSUSRTK1" />
+                            </div>
+                            <div class="field field-sm">
+                                <!-- <label class="field-label">{{formVada.value.TSUSR1.VTNAME && formVada.value.TSUSR1.VTNAME != '' ? (formVada.value.TSUSR1.VTNAME.length > 20 ? formVada.value.TSUSR1.VTNAME.substring(0,20) : formVada.value.TSUSR1.VTNAME)  : 'משתתף 1'}}</label> -->
+                                <!-- <label class="field-label">{{initData.formData ? initData.formData.TSUSRTK1.substring(0,20) : initData.initData.TSUSRTK1.substring(0,20)}}</label> -->
+                                <p-dropdown class="input-sm" [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR1" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR1">
+                                            <div>{{ formVada.value.TSUSR1.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-user pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ user.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <!-- <label class="field-label">משתתף 2</label> -->
+                        <div class="p-inputgroup">
+                            <div class="field field-sm">
+                                <input type="text" class="input-sm" pInputText formControlName="TSUSRTK2" />
+                            </div>
+                            <div class="field field-sm">
+                                <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR2" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR2">
+                                            <div>{{ formVada.value.TSUSR2.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-user pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ user.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <!-- <label class="field-label">משתתף 3</label> -->
+                        <div class="p-inputgroup">
+                            <div class="field field-sm">
+                                <input type="text" class="input-sm" pInputText formControlName="TSUSRTK3" />
+                            </div>
+                            <div class="field field-sm">
+                                <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR3" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR3">
+                                            <div>{{ formVada.value.TSUSR3.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-user pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ user.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <!-- <label class="field-label">משתתף 4</label> -->
+                        <div class="p-inputgroup">
+                            <div class="field field-sm">
+                                <input type="text" class="input-sm" pInputText formControlName="TSUSRTK4" />
+                            </div>
+                            <div class="field field-sm">
+                                <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR4" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR4">
+                                            <div>{{ formVada.value.TSUSR4.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-user pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ user.SHMUSR }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-3">
+                        <div class="field field-md">
+                            <label class="field-label">תפקיד משתתף 1</label>
+                            <input type="text" class="input-sm" pInputText formControlName="TSUSRTK1" />
+                        </div>
+                        <div class="field field-md">
+                            <label class="field-label">{{formVada.value.TSUSR1.VTNAME && formVada.value.TSUSR1.VTNAME != '' ? (formVada.value.TSUSR1.VTNAME.length > 20 ? formVada.value.TSUSR1.VTNAME.substring(0,20) : formVada.value.TSUSR1.VTNAME)  : 'משתתף 1'}}</label>
+                            <label class="field-label">{{initData.formData ? initData.formData.TSUSRTK1.substring(0,20) : initData.initData.TSUSRTK1.substring(0,20)}}</label>
+                            <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR1" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR1">
+                                        <div>{{ formVada.value.TSUSR1.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-user pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <div>{{ user.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="field field-md">
+                            <label class="field-label">תפקיד משתתף 2</label>
+                            <input type="text" class="input-sm" pInputText formControlName="TSUSRTK2" />
+                        </div>
+                        <div class="field field-md">
+                            <label class="field-label">{{formVada.value.TSUSR2 && formVada.value.TSUSR2.VTNAME != '' ? (formVada.value.TSUSR2.VTNAME.length > 20 ? formVada.value.TSUSR2.VTNAME.substring(0,20) : formVada.value.TSUSR2.VTNAME) : 'משתתף 2'}}</label>
+                            <label class="field-label">{{initData.formData ? initData.formData.TSUSRTK2.substring(0,20) : initData.initData.TSUSRTK2.substring(0,20)}}</label>
+                            <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR2" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR2">
+                                        <div>{{ formVada.value.TSUSR2.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-user pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <div>{{ user.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="field field-md">
+                            <label class="field-label">תפקיד משתתף 3</label>
+                            <input type="text" class="input-sm" pInputText formControlName="TSUSRTK3" />
+                        </div>
+                        <div class="field field-md">
+                            <label class="field-label">{{formVada.value.TSUSR3 && formVada.value.TSUSR3.VTNAME != '' ? (formVada.value.TSUSR3.VTNAME.length > 23 ? formVada.value.TSUSR3.VTNAME.substring(0,23) : formVada.value.TSUSR3.VTNAME) : 'משתתף 3'}}</label>
+                            <label class="field-label">{{initData.formData ? initData.formData.TSUSRTK3.substring(0,20) : initData.initData.TSUSRTK3.substring(0,20)}}</label>
+                            <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR3" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR3">
+                                        <div>{{ formVada.value.TSUSR3.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-user pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <div>{{ user.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="field field-md">
+                            <label class="field-label">תפקיד משתתף 4</label>
+                            <input type="text" class="input-sm" pInputText formControlName="TSUSRTK4" />
+                        </div>
+                        <div class="field field-md">
+                            <label class="field-label">{{formVada.value.TSUSR4 && formVada.value.TSUSR4.VTNAME != '' ? (formVada.value.TSUSR4.VTNAME.length > 20 ? formVada.value.TSUSR4.VTNAME.substring(0,20) : formVada.value.TSUSR4.VTNAME) : 'משתתף 4'}}</label>
+                            <label class="field-label">{{initData.formData ? initData.formData.TSUSRTK4.substring(0,20) : initData.initData.TSUSRTK4.substring(0,20)}}</label>
+                            <p-dropdown [options]="usersList" (onFilter)="searchUsers($event.filter)" formControlName="TSUSR4" optionLabel="SHMUSR" [filter]="true" filterBy="SHMUSR" [showClear]="true" placeholder="בחירת משתמש">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2" *ngIf="formVada.value.TSUSR4">
+                                        <div>{{ formVada.value.TSUSR4.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-user pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <div>{{ user.SHMUSR }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div> -->
+
+                    <div class="col-12 text-right">
+                        <h4 class="mb-2">פרטי הועדה:</h4>
+                    </div>
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">סוג ועדה</label>
+                            <p-dropdown [options]="vadaTypes" formControlName="VDSGVD" optionLabel="name"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">שעת ועדה</label>
+                            <p-calendar dir="ltr" [showTime]="true" [timeOnly]="true" hourFormat="24" formControlName="VDSHAA"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-4"></div>
+
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">תאריך ועדה</label>
+                            <p-calendar formControlName="VDDATE" (ngModelChange)="onChangeDate('VDDATE')" dateFormat="dd.mm.yy" [touchUI]="true" [minDate]="minimumDate"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">תאריך עברי</label>
+                            <input type="text" pInputText formControlName="VDDATH" maxlength="20" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">יום בשבוע</label>
+                            <input type="text" pInputText formControlName="VDDATW" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">תאריך אחרון להגשה</label>
+                            <p-calendar formControlName="VDHGDT" (ngModelChange)="onChangeDate('VDHGDT')" dateFormat="dd.mm.yy" [touchUI]="true" [minDate]="minimumDate" [maxDate]="formVada.value.VDDATE"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">תאריך עברי</label>
+                            <input type="text" pInputText formControlName="VDHGDH" maxlength="20" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">יום בשבוע</label>
+                            <input type="text" pInputText formControlName="VDHGDW" maxlength="10" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="field field-md">
+                            <label class="field-label">מקום ועדה</label>
+                            <input type="text" pInputText formControlName="VDMKUM" maxlength="60" />
+                        </div>
+                    </div>
+                    <div class="col-12 text-right">
+                        <h4 class="mb-2">נתונים נוספים:</h4>
+                    </div>
+                    <div class="col-12">
+                        <div class="field field-md">
+                            <label class="field-label">קישור זום לועדה</label>
+                            <input type="text" pInputText formControlName="TSZOOM" maxlength="250" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="field field-md">
+                            <label class="field-label">תאור סדר יום</label>
+                            <textarea rows="4" cols="30" pInputTextarea formControlName="TSKTSRY" maxlength="1500"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="flex align-items-center gap-1">
+                            <p-checkbox formControlName="SENDMAIL" value="1" inputId="ny"></p-checkbox>
+                            <label class="field-label" for="ny">לשלוח מייל לכלל מכיני הדרישות?</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <lib-button [label]="initData.formData ? 'עריכת ועדה' :' הוספת ועדה'" size="md" type="submit" role="button" (click)="onSubmit()"></lib-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<p-toast></p-toast>
+
+<!-- http://jer400:10100/caspi/mlay/pritim.php?filter_fr_ktlg=43500343&filter_to_ktlg=43500343 -->
+<!-- <iframe src="http://jerarchiveviewer/ArchiveInputDocs.html?SystemId=99&archiveid=306&tiknum=2022-500100&username=money&outside=true" frameborder="0"></iframe> -->

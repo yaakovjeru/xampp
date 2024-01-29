@@ -1,0 +1,43 @@
+<div class="col-12">
+    <div class="grid w-full mb-2" *ngIf="initData">
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="flex pkuda_line_sum color-secondary">
+                        <div><span class="font-bold">{{initData.DRTEUR}}</span></div>
+                        <div><span>מס דרישה: </span><span class="font-bold">{{initData.DRDRNO}}</span></div>
+                        <div><span>סטטוס דרישה: </span><span class="font-bold">{{initData.DRSTTR}}</span></div>
+                    </div>
+                </div>
+                <div class="col-12 pt-1 pb-0">
+                    <div class="flex pkuda_line_sum pkuda_line_sum_second color-secondary">
+                        <div><span>תאריך דרישה: </span><span class="font-bold">{{initData.DRDATE | dateNumbers}}</span></div> 
+                        <div><span>כתובת: </span><span class="font-bold">{{initData.DRASKT}}</span></div>
+                        <div><span>סה"כ: </span><span class="font-bold">{{initData.DRTTAL |  number : '1.2-2'}} ₪</span></div> 
+                        <div><span>מחסן: </span><a href="http://jer400:10100/caspi/mlay/pritim_mhsn.php?filter_fr_mhsn={{initData.MSMHSN}}" target="_blank"><span class="font-bold">{{initData.MSMHSN}} - {{initData.DRMHSN}} ({{initData.DRKSHR}})</span></a></div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-tabView>
+        <p-tabPanel header="שורות דרישה">
+            <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [rows]="7" [header]="false" tableClass="tableLess"></lib-table>
+        </p-tabPanel>
+        <p-tabPanel header="תקציב">
+            <lib-table [dataTable]="dataTableTakziv" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [rows]="7" [header]="false"></lib-table>
+        </p-tabPanel>
+        <p-tabPanel header="הערות הדפסה">
+            <lib-table [dataTable]="dataTableComments" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [rows]="7" [header]="false"></lib-table>
+        </p-tabPanel>
+        <!-- <p-tabPanel header="הזמנות אחרונות">
+            <lib-table [dataTable]="dataTableLastOrders" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [rows]="7" [header]="false"></lib-table>
+        </p-tabPanel> -->
+    </p-tabView>
+</div>
+
+<p-sidebar [(visible)]="sidebardisplay" class="table_sidebar" [style]="{'width': '650px'}">
+    <h3 class="mb-0">{{sidebarTitle}}</h3>
+    <lib-table [dataTable]="dataTableYitrot" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" tableClass="pagination_sm" [lazy]="false" [rows]="12" [header]="true"></lib-table>
+</p-sidebar>

@@ -1,0 +1,36 @@
+<div class="grid">
+    <form (ngSubmit)="onSubmit()" class="col-12 p-0">
+        <div class="grid">
+            <div class="col-12">
+                <div class="grid">
+                    <div class="col-2 search_label">
+                        <span>מספר דרישה: </span>
+                    </div>
+                    <div class="col-5 pl-5">
+                        <div class="flex">
+                            <div class="field field-sm"><label class="field-label">מ-דרישה</label><input type="text" pInputText name="filter_fr_drisha" [(ngModel)]="searchForm.filter_fr_drisha" /></div>
+                            <div class="field_divider">-</div>
+                            <div class="field field-sm"><label class="field-label">מ-שנה</label><input type="text" pInputText name="filter_fr_year" [(ngModel)]="searchForm.filter_fr_year" /></div>
+                            <div class="field_divider">-</div>
+                            <div class="field field-sm"><label class="field-label">מ-גורם</label><input type="text" pInputText name="filter_fr_gorem" [(ngModel)]="searchForm.filter_fr_gorem" /></div>
+                        </div>
+                    </div>
+                    <div class="col-5 pr-5">
+                        <div class="flex">
+                            <div class="field field-sm"><label class="field-label">עד-דרישה</label><input type="text" pInputText name="filter_to_drisha" [(ngModel)]="searchForm.filter_to_drisha" /></div>
+                            <div class="field_divider">-</div>
+                            <div class="field field-sm"><label class="field-label">עד-שנה</label><input type="text" pInputText name="filter_to_year" [(ngModel)]="searchForm.filter_to_year" /></div>
+                            <div class="field_divider">-</div>
+                            <div class="field field-sm"><label class="field-label">עד-גורם</label><input type="text" pInputText name="filter_to_gorem" [(ngModel)]="searchForm.filter_to_gorem" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="formgrid grid mx-5 mt-5">
+            <div class="col-12 text-center">
+                <lib-button label="חיפוש" size="md" type="submit" role="button" (click)="onSubmit()"></lib-button>
+            </div>
+        </div>
+    </form>
+</div>

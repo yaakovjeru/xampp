@@ -1,0 +1,41 @@
+
+
+<div class="grid">
+    <div class="col-12">
+        <div class="grid">
+            <div class="col-12 xl:col lg:col-3 md:col-4">
+                <app-ariach title="דרישות ממתינות לטיפולך" icon="data-transfer" [numbers]="sum3"></app-ariach>
+            </div>
+            <div class="col-12 xl:col lg:col-3 md:col-4">
+                <app-ariach title="דרישות ממתינות לאישור מנהל אגף" icon="invoice" [numbers]="sum3"></app-ariach>
+            </div>
+            <div class="col-12 xl:col lg:col-3 md:col-4">
+                <app-ariach title="דרישות ממתינות לאישור ממונה רכש" icon="voucher" [numbers]="sum3"></app-ariach>
+            </div>
+            <div class="col-12 xl:col lg:col-3 md:col-4">
+                <app-ariach title="דרישות ממתינות לאישור עוזר כספים" icon="voucher" [numbers]="sum3"></app-ariach>
+            </div>
+            <div class="col-12 xl:col lg:col-3 md:col-4">
+                <app-ariach title="דרישות ממתינות לאישור מינהל תיפעול" icon="voucher" [numbers]="sum3"></app-ariach>
+            </div>
+            <div class="col-12 xl:col lg:col-3 md:col-4 text-center flex justify-content-center">
+                <lib-button class="w-full btn-dashboard " bclass="h-full w-full" icon="add" label="צור דרישת טובין חדשה"
+                    size="lg" (click)="newPkuda()"></lib-button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-12 lg:col-4 xl:col-1 text-center flex justify-content-center">
+        <lib-button class="w-full btn-dashboard " bclass="h-full w-full" icon="add" label="צור דרישת טובין חדשה" size="lg" (click)="newPkuda()"></lib-button>
+    </div> -->
+</div>
+<div class="grid">
+    <div class="col-12 mt-3">
+        <div class="m-0 text-xl font-bold">({{dataTable.totalrows}}) דרישות שיצרת ועדיין לא הסתיים הטיפול בהן</div>
+    </div>
+    <div class="col-12 page-content" *ngIf="dataTable.data">
+        <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)"
+            (onActionsClick)="actionClick($event)"></lib-table>
+    </div>
+</div>
+
+<!-- <app-favorite-pages flag="true"></app-favorite-pages> -->

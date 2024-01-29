@@ -1,0 +1,26 @@
+<div class="grid">
+    <div class="col-12 lg:col-8 xl:col-10">
+        <div class="grid">
+            <div class="col-12 xl:col-4 lg:col-6">
+                <app-ariach title="פקודות שחזרו ליוצר הפקודה" icon="data-transfer"></app-ariach>
+            </div>
+            <div class="col-12 xl:col-4 lg:col-6">
+                <app-ariach title="פקודות ממתינות לאישור מנהל" icon="invoice"></app-ariach>
+            </div>
+            <div class="col-12 xl:col-4 lg:col-6 hidden xl:inline">
+                <app-ariach title="פקודות ממתינות לאישור ממונים" icon="voucher"></app-ariach>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 lg:col-4 xl:col-2 text-center flex justify-content-center">
+        <lib-button class="w-full btn-dashboard " bclass="h-full w-full" icon="add" label="צור פקודת יומן חדשה" size="lg" (click)="newPkuda()"></lib-button>
+    </div>
+</div>
+<div class="grid">
+    <div class="col-12 mt-3">
+        <div class="m-0 text-xl font-bold">({{dataTable.totalrows}}) פקודות ממתינות לטיפולי</div>
+    </div>
+    <div class="col-12 page-content" *ngIf="dataTable.data">
+        <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [header]="true"></lib-table>
+    </div>
+</div>

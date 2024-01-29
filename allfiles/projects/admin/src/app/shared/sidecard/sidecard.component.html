@@ -1,0 +1,20 @@
+<div class="sidecard" [ngClass]="{ 'sidecard--opened': opened }" [style]="{'z-index': getZIndex() + (opened ? 2 : 1) }">
+    <div class="sidecard-tab" [ngStyle]="tabStyle" (click)="open()">
+        <span>{{ tabText }}</span>
+        <span class="sidecard-tab__icon"> <span class={{iconClass}}></span></span>
+
+    </div>
+    <div class="sidecard-box">
+        <div class="sidecard-header">
+            <div class="sidecard-title">{{ getTitle() }}</div>
+            <button pButton pRipple type="button" icon="pi pi-times"
+                class="close-button p-button-rounded p-button-text p-button-plain" (click)="close()"></button>
+        </div>
+
+        <div class="sidecard-content">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="opened" [style]="{'z-index': getZIndex() }" class="p-component-overlay" (click)="close()"></div>

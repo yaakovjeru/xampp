@@ -1,0 +1,46 @@
+<p-table [columns]="sampleTableColumns" [value]="sampleTableData">
+
+    <!-- caption -->
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <span>לחץ על החיפוש <i class="pi pi-search"></i> כדי לפתוח את הסינון</span>
+            <div>
+                <button pButton libSvg="plus-in-circ-filled" label="הוסף נתונים" class="mr-3"></button>
+                <button pButton icon="pi pi-search" class="p-button-text p-button-secondary mr-3"
+                    (click)="toggleFilters()"></button>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- header -->
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [class]="getHeaderCellClass(col)">
+                {{col.header}}
+            </th>
+            <th>פעולה</th>
+        </tr>
+
+        <!-- filters row -->
+        <tr *ngIf="showFilters">
+            <th *ngFor="let col of columns" [class]="getHeaderCellClass(col)">
+                <p-columnFilter type="text" [field]="col.field" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th></th>
+        </tr>
+    </ng-template>
+
+    <!-- body / data -->
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns" [class]="getCellClass(rowData, col)">
+                {{rowData[col.field]}}
+            </td>
+            <td>
+                <button pButton libSvg="trash" class="p-button-text p-button-plain"></button>
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>

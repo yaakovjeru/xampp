@@ -1,0 +1,41 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<div class="col-12">
+    <!-- <a href="https://jermoneydash.muni.jerusalem.muni.il/">KSF400</a> -->
+</div>
+
+<app-steps-menu></app-steps-menu>
+
+<h4>ניהול תתי סעיפים</h4>
+<div class="row">
+    <h5 class="col">שנה</h5>
+    <h5 class="col">מספר סעיף</h5>
+    <h5 class="col">תאור</h5>
+    <h5 class="col"></h5>
+</div>
+
+<div class="row">
+    <p-inputNumber class="col" [(ngModel)]="fndY4" showButtons="true" buttonLayout="horizontal"
+        spinnerMode="horizontal" inputId="horizontal" decrementButtonClass="p-button-secondary"
+        incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus" size="sm"></p-inputNumber>
+
+    <p-inputNumber class="col" [(ngModel)]="fndHN" mode="decimal" inputId="withoutgrouping" [useGrouping]="false" size="sm">
+    </p-inputNumber>
+    <input class="col" type="text" pInputText [(ngModel)]="fndTUR"/>
+
+    <lib-button class="col" label="חפש" icon="search" (click)="findSEIF()" size="m"></lib-button>
+</div>
+
+
+
+<div class="col-12 page-content" *ngIf="dtSEIFIM.data">
+    <lib-table [dataTable]="dtSEIFIM" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)"
+        [header]="false"></lib-table>
+</div>
+
+<div class="col-12 page-content" *ngIf="dtTATIM.data">
+    <lib-table [dataTable]="dtTATIM" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)"
+        [header]="false"></lib-table>
+</div>
+

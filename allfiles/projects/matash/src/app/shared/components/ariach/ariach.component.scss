@@ -1,0 +1,29 @@
+.arich {
+    height: 120px;
+    border-radius: 10px;
+    // display: flex;
+    padding: 15px;
+    text-align: center;
+    background: #0B3058;
+    .title {
+        font: normal normal normal 22px/26px Assistant;
+        color: #01CABD;
+        border-left: 1px solid #01CABD;
+    }
+    .sum_number {
+        height: 100%;
+        color: #ACE8E4;
+    }
+    .sum_number_dig {
+        color: #ACE8E4;
+        font: normal normal bold 36px/51px Assistant;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .arich {
+        .title { 
+            font: 500 18px/23px Assistant;
+        }
+    }
+}

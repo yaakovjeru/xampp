@@ -1,0 +1,118 @@
+<p-table #dt1 *ngIf="dataTable.data" [columns]="dataTable.cols" [value]="dataTable.data"  [totalRecords]="dataTable.totalrows"
+    currentPageReportTemplate="הצגת {first} עד {last} מ {totalRecords} רשומות" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [loading]="false"
+    [rowHover]="true" [rowsPerPageOptions]="[rows,25,50]" styleClass="p-datatable-striped" [alwaysShowPaginator]="false" 
+    [lazy]="lazy" (onLazyLoad)="nextPage($event)" [first]="pagination_url && queryParams.first > 0 ? queryParams.first : null"
+    [globalFilterFields]="colsNames" (onPage)="nextPage($event)" [loading]="isLoading" [resizableColumns]="true" class="{{tableClass}}">
+    
+    <ng-template pTemplate="caption" *ngIf="header">
+        <div class="flex align-items-center justify-content-between">
+            <div>
+                <ng-container [ngTemplateOutlet]="mainButtonsRight"></ng-container>
+                <span *ngIf="!mainButtonsRight">לחץ על החיפוש <i class="pi pi-search"></i> כדי לפתוח את הסינון</span>
+            </div>
+            <div *ngIf="title">
+                <h3 class="mb-0">{{title}}</h3>
+            </div>
+            <div>
+                <ng-container [ngTemplateOutlet]="mainButtons"></ng-container>
+                <div class="p-input-icon-left ml-auto p-inputtext-sm mr-2 -mb-3">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="חיפוש חופשי" />
+                </div>
+                <lib-button icon="excel" (click)="exportExcel()" bclass="p-button-text p-button-secondary mr-3 surface-100 p-button-icon-only icon-black" size=""></lib-button>
+                <!-- <button pButton icon="pi pi-download" class="p-button-text p-button-secondary mr-3 surface-100" (click)="exportExcel()"></button> -->
+                <!-- <button pButton icon="pi pi-search" class="p-button-text p-button-secondary mr-1 surface-100" (click)="toggleFilters()"></button> -->
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns *ngIf="dataTable.data.length > 0">
+        <tr>
+            <th *ngIf="dataTable.menu"></th>
+            <ng-container *ngFor="let col of columns">
+                <th *ngIf="col.TYPE.trim() != 'HIDE'" [pSortableColumn]="col.sort" [class]="getHeaderCellClass(col)" [pSortableColumn]="col.FIELD">
+                    <p-sortIcon [field]="col.FIELD"></p-sortIcon>
+                    {{col.HEADER}}
+                </th>
+            </ng-container>
+            <th *ngIf="dataTable.buttons || actions">פעולה</th>
+        </tr>
+        <tr *ngIf="showFilters">
+            <th *ngIf="dataTable.menu"></th>
+            <ng-container *ngFor="let col of columns">
+                <th *ngIf="col.TYPE.trim() != 'HIDE'" [class]="getHeaderCellClass(col)">
+                    <p-columnFilter type="text" [field]="col.FIELD" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
+                </th>
+            </ng-container>
+            <th *ngIf="dataTable.buttons || actions"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns" *ngIf="dataTable.data.length > 0">
+        <tr>
+            <td class="group-divider-cell-first" *ngIf="dataTable.menu">
+                <div class="card flex justify-content-center">
+                    <p-menu class="table_open_menu" #menu [model]="menuOpenContent(rowData)" [popup]="true"></p-menu>
+                    <button class="table_open_menu_btn" pButton type="button" (click)="menu.toggle($event)" icon="pi pi-bars"></button>
+                </div>
+            </td>
+            <ng-container *ngFor="let col of columns">
+                <td *ngIf="col.TYPE.trim() != 'HIDE'" [class]="getCellClass(col, rowData)" (click)="onRowClick.emit(rowData)" [class.cell-long-td]="col.TYPE.trim() == 'TEXT'">
+                    <div [class]="getCellContentClass(col, rowData)">
+                        <ng-container *ngIf="isObj(rowData[col.FIELD]); else fieldNormal">
+                            <ng-container *ngFor="let item of rowData[col.FIELD]">
+                                <lib-cell [cellType]="col.TYPE ? col.TYPE.trim() : 'VARCHAR'" [cellValue]="item.data" (callButton)="openButton(rowData, $event)" [cellClass]="item.class ? item.class : ''" [cellLink]="item.link ? item.link : ''"></lib-cell>
+
+                                <!-- <p-button (click)="op.toggle($event)" icon="pi pi-search" label="הצגה" *ngIf="item.type == 'overlayPanel'"></p-button>
+                                <p-overlayPanel #op [style]="{'width': '450px'}" [showCloseIcon]="true">
+                                    <ng-template pTemplate="content">
+                                        <p-table [value]="products" selectionMode="single" [(selection)]="selectedProduct" (onRowSelect)="onRowSelect($event, op)" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="name">Name<p-sortIcon field="name"></p-sortIcon></th>
+                                                    <th>Image</th>
+                                                    <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-product>
+                                                <tr [pSelectableRow]="rowData">
+                                                    <td>{{product.name}}</td>
+                                                    <td><img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}"[alt]="product.image" class="w-5rem shadow-2"/></td>
+                                                    <td>{{product.price}}</td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </ng-template>
+                                </p-overlayPanel> -->
+
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #fieldNormal>
+                            <lib-cell [cellType]="col.TYPE ? col.TYPE.trim() : 'VARCHAR'" [cellValue]="rowData[col.FIELD]" (callButton)="openButton(rowData, $event)"></lib-cell>
+                        </ng-template>
+                        
+                        <!-- <ng-container *ngIf="col.TYPE.trim() == 'DEC' || col.TYPE.trim() == 'DATE'; else fieldNormal">
+                            <ng-container *ngIf="col.TYPE.trim() == 'DEC'">{{rowData[col.FIELD] | number: '1.0':'en-US'}} ₪</ng-container>
+                            <ng-container *ngIf="col.TYPE.trim() == 'DATE'">{{ rowData[col.FIELD] | dateNumbers}}</ng-container>
+                        </ng-container>
+                        <ng-template #fieldNormal>
+                            <span *ngIf="!isObj(rowData[col.FIELD])" [class.text-sm]="rowData[col.FIELD] && rowData[col.FIELD].length > 1 && rowData[col.FIELD].trim().length > 30">
+                                {{rowData[col.FIELD] && rowData[col.FIELD].length > 1 && rowData[col.FIELD].trim().length > 35 ? (rowData[col.FIELD].trim() | slice:0:35)+'...' : (rowData[col.FIELD])}}
+                            </span>
+                        </ng-template>
+                        <div *ngIf="isObj(rowData[col.FIELD])">
+                            123456
+                        </div> -->
+                    </div>
+                </td>
+            </ng-container>
+            <td class="group-divider-cell" *ngIf="dataTable.buttons || actions">
+                <ng-container *ngTemplateOutlet="actions; context: { $implicit: rowData }"></ng-container>
+                <ng-container *ngFor="let item of dataTable.buttons">
+                    <lib-button class="mr-3" icon="{{item.icon}}" (click)="openButton(rowData, item)" label="{{item.label}}" bclass="{{item.class}}" size="sm"></lib-button>
+                </ng-container>
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>

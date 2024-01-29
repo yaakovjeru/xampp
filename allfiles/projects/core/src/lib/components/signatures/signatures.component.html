@@ -1,0 +1,32 @@
+<div class="col-12">
+    <div class="grid w-full mb-2">
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="flex pkuda_line_sum color-secondary">
+                        <div *ngFor="let item of initData.json">
+                            <span *ngIf="item.name">{{item.name}}: </span>
+                            <span class="font-bold">{{item.value}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 pt-1 pb-0" *ngIf="initData.jsonSub">
+                    <div class="flex pkuda_line_sum pkuda_line_sum_second color-secondary">
+                        <div *ngFor="let item of initData.jsonSub">
+                            <span *ngIf="item.name">{{item.name}}: </span>
+                            <span class="font-bold">{{item.value}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid w-full mb-2">
+        <div class="col-12 border">
+            <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" [lazy]="false" [rows]="5" [header]="false"></lib-table>
+        </div>
+    </div>
+</div>
+
+<p-toast position="top-center"></p-toast>

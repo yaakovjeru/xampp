@@ -1,0 +1,17 @@
+<div [class]="cellClass" (click)="openLink(cellLink)" *ngIf="cellValue != '.00' && cellValue != '0'">
+    <ng-container *ngIf="cellType.trim() == 'DEC' || cellType.trim() == 'DATE' || cellType.trim() == 'TIME' || cellType.trim() == 'TIMESHORT' || cellType.trim() == 'ICON' || cellType.trim() == 'HTML'; else fieldNormal">
+        <ng-container *ngIf="cellType.trim() == 'DEC'">{{cellValue | number: '1.0':'en-US'}} ₪</ng-container>
+        <ng-container *ngIf="cellType.trim() == 'DATE'">{{ cellValue | dateNumbers}}</ng-container>
+        <ng-container *ngIf="cellType.trim() == 'TIME'">{{ cellValue | dateNumbers : 'time'}}</ng-container>
+        <ng-container *ngIf="cellType.trim() == 'TIMESHORT'">{{ cellValue | dateNumbers : 'timeshort'}}</ng-container>
+        <ng-container *ngIf="cellType.trim() == 'ICON'"><i class="pi  {{cellValue}}" style="font-size: 1.3rem"></i></ng-container>
+        <ng-container *ngIf="cellType.trim() == 'HTML'">
+            <div class="cell-long-text" [innerHTML]="cellValue"></div>
+        </ng-container>
+    </ng-container>
+    <ng-template #fieldNormal>
+        <span [class.text-sm]="cellValue && cellValue.length > 1 && cellValue.trim().length > 30 && cellType.trim() != 'TEXT'" [class.cell-long-text]="cellType.trim() == 'TEXT'">
+            {{cellValue && cellValue.length > 1 && cellValue.trim().length > 35 && cellType.trim() != 'TEXT' ? (cellValue.trim() | slice:0:35)+'...' : cellValue}}
+        </span>
+    </ng-template>
+</div>

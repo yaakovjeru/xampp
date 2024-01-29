@@ -1,0 +1,61 @@
+<div class="grid" *ngIf="!excelData">
+    
+    <div class="col-12 p-0">
+        <div class="upload_dialog w-full flex justify-content-around align-items-center flex-column">
+            <div class="grid mx-5 text-center">
+                <div class="col-12">
+                    <h4>בנה קובץ האקסל ע״פ העמודות הבאות:</h4>
+                </div>
+                <div class="col-12 p-0 flex text-center justify-content-center">
+                    <div *ngFor="let item of fileIndex" class="file_index_reader">
+                        <div>{{item.FIELD}}</div>
+                        <div class="font-bold">{{item.HEADER}}</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <h3 style="color:navy">במעבר לשנה הקש ENTER</h3>
+                </div>
+            </div>
+            <div class="formgrid grid mx-5">                
+                <div class="col-4">
+                    <div class="field">
+                        <label class="field-label">שנה</label>
+                        <input type="text" aria-describedby="שנה" pInputText name="year" [(ngModel)]="formData.year" (change)="chgYEAR()" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="field">
+                        <label class="field-label">מספר פקודה</label>
+                        <input type="text" aria-describedby="מספר פקודה" pInputText name="pkuda" [(ngModel)]="formData.pkuda" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="field">
+                        <label class="field-label">תאריך ערך</label>
+                        <p-calendar [(ngModel)]="formData.date" dateFormat="dd.mm.yy" [touchUI]="true"></p-calendar>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center" *ngIf="formData.year && formData.date">
+                    <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" #file hidden="true" (change)="upload(file.files)">
+                    <lib-button class="ml-2" label="העלה קובץ" icon="excel" size="md" (click)="chkPY_EXIST(); file.click()"></lib-button>                    
+                    <lib-button class="ml-2" label="צור פקודה ידנית" size="md" (click)="pkudaNew()"></lib-button>                  
+                    <lib-button label="שכפול פקודה" size="md" (click)="pkudaCopy()"></lib-button>
+                    <!-- <lib-button class="ml-2" label="העלה קובץ" icon="excel" size="md" (click)="chkPY_EXIST(); formData.pkuda && formData.pkuda.length > 0 ? file.click() : error('הכנס מספר פקודה')"></lib-button> -->
+                    <!-- <lib-button label="שכפול פקודה" size="md" (click)="formData.pkuda && formData.pkuda.length > 0 ? pkudaCopy() : error('הכנס מספר פקודה')"></lib-button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid" *ngIf="excelData">
+    <div class="col-12">
+        <h3>בדיקת נתוני הקובץ לפני העלאתם</h3>
+        <lib-table [dataTable]="dataTable" [header]="false" [rows]="7"></lib-table>
+    </div>
+    <div class="col-12 text-left">
+        <lib-button label="ביטול וחזרה" bclass="surface-500" size="md" (click)="excelData = null"></lib-button>
+        <lib-button label="שמירה" size="md" (click)="saveFile()"></lib-button>
+    </div>
+</div>

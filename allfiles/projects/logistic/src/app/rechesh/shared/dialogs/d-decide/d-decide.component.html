@@ -1,0 +1,58 @@
+<div class="col-12">
+    <div class="grid w-full mb-2" *ngIf="initData">
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="flex pkuda_line_sum color-secondary">
+                        <div><span class="font-bold">{{initData.item.DRTEUR}}</span></div>
+                        <div><span>מס דרישה: </span><span class="font-bold">{{initData.item.DRDRNO}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid surface-300 py-5 px-0">
+    <form [formGroup]="formVada">
+        <div class="col-12 p-0">
+            <div class="upload_dialog w-full flex justify-content-around align-items-center flex-column">
+                <div class="formgrid grid mx-5">
+
+                    <div class="col-4">
+                        <div class="field field-md">
+                            <label class="field-label">החלטת ועדה</label>
+                            <p-dropdown [options]="decideTypes" formControlName="decide" optionLabel="name" dataKey="code"></p-dropdown>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="field field-md">
+                            <label class="field-label">הערות דיון</label>
+                            <textarea rows="4" cols="30" pInputTextarea formControlName="note1" maxlength="2400" [readonly]="vada_status == 3 ? true : null"></textarea>
+                            <lib-button label="תבניות הערות לדיון" bclass="rounded p-button-secondary" size="sm" (click)="openNotes(1)" *ngIf="vada_status != 3"></lib-button>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="field field-md">
+                            <label class="field-label">הערות החלטה</label>
+                            <textarea rows="4" cols="30" pInputTextarea formControlName="note2" maxlength="2400" [readonly]="vada_status == 3 ? true : null"></textarea>
+                            <lib-button label="תבניות הערות להחלטה" bclass="rounded p-button-secondary" size="sm" (click)="openNotes(2)" *ngIf="vada_status != 3"></lib-button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <lib-button label="שמירה" size="md" type="submit" role="button" (click)="onSubmit()"></lib-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<p-toast></p-toast>
+
+<p-sidebar [(visible)]="sidebardisplay" class="table_sidebar" [style]="{'width': '650px'}">
+    <h3 class="mb-0">תבניות הערות</h3>
+    <lib-table [dataTable]="dataTable" (onRowClick)="rowClick($event)" (onActionsClick)="actionClick($event)" tableClass="pagination_sm" [lazy]="false" [rows]="12" [header]="true"></lib-table>
+</p-sidebar>

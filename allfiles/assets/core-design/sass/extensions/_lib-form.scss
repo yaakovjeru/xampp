@@ -1,0 +1,165 @@
+@use "sass:math";
+
+//
+// buttons
+// ================
+.p-button {
+    .p-button-icon-left {
+        @include rtl {
+            order: 99;
+        }
+    }
+
+    .p-button-icon-right {
+        @include rtl {
+            order: 0;
+        }
+    }
+
+    // & + .p-button {
+    //     margin-left: 1rem;
+
+    //     @include rtl {
+    //         margin-left: unset;
+    //         margin-right: 1rem;
+    //     }
+    // }
+
+    &.button-xs {
+        padding: ($button-padding-y - 0.5rem) ($button-padding-x - 0.25rem);
+        
+        &:not(.p-button-rounded) {
+            border-radius: 4px;
+        }
+
+        &.p-button-icon-only {
+            width: $buttonIconOnlyWidth - 1rem;
+            padding: ($button-padding-y - 0.5rem);
+
+            &.p-button-rounded {
+                height: 2.1rem;
+                height: $buttonIconOnlyWidth - 1rem;
+            }
+        }
+    }
+}
+
+
+//
+// basic field css
+// ================
+.field-label {
+    color: $gray-600;
+    font-weight: $font-weight-semibold;
+}
+
+.field {
+    position: relative;
+
+    .field-label {
+        z-index: 1; //0;
+    }
+
+    // @include media-breakpoint-up(md) {
+    //     margin-bottom: 2.6rem;
+    // }
+
+    &:not(.lib-field-checkbox):not(.lib-field-radiobutton-list):not(.lib-field-checkbox-list):not(
+            .lib-field-select-button
+        ) {
+        .field-label {
+            display: block;
+            position: absolute;
+
+            top: 0;
+            right: 0;
+            left: 0;
+            width: 100%;
+            // z-index: 0;
+            padding: $field-label-padding-y $input-padding-x;
+            pointer-events: none;
+        }
+
+        &.col-3 {
+            .field-label {
+                right: $gutter;
+                width: calc(100% - 2 * #{$gutter});
+            }
+        }
+    }
+
+    .p-inputtext,
+    p-inputnumber,
+    .p-inputnumber,
+    .p-dropdown,
+    .p-autocomplete {
+        width: 100%;
+    }
+
+    &.lib-field-select-button .field-label {
+        padding-left: 0;
+        padding-right: 0;
+        position: relative;
+        width: 100%;
+        pointer-events: none;
+
+        @include media-breakpoint-up(md) {
+            position: absolute;
+            top: -($fontSize * $line-height-base); //-(($fontSize * $line-height-base) + (2 * 0.1rem))
+        }
+    }
+
+    .p-field-checkbox,
+    .p-field-radiobutton {
+        margin-bottom: 0.25rem;
+
+        p-checkbox,
+        p-radiobutton {
+            align-items: flex-start;
+        }
+    }
+    .p-checkbox-label,
+    .p-radiobutton-label {
+        line-height: 1.23;
+    }
+    .p-checkbox,
+    .p-radiobutton {
+        margin-top: 0.115em;
+    }
+
+    // required
+    &.field-required {
+        .field-label,
+        .with-asterisk {
+            &::after {
+                content: "*";
+                display: inline-block;
+                color: $errorColor;
+                font-size: 2em;
+                font-weight: 600;
+                line-height: 0;
+                margin-top: 0.2em;
+                margin-left: 0.2rem;
+                vertical-align: middle;
+
+                @include rtl {
+                    margin-left: 0;
+                    margin-right: 0.2rem;
+                }
+            }
+        }
+    }
+
+    .p-inputtext {
+        position: relative;
+        direction: rtl;
+        font-weight: $font-weight-semibold;
+    }
+}
+
+.hint {
+    font-size: 0.875rem;
+    color: $gray-600;
+    display: block;
+    margin-top: 0.1rem;
+}
